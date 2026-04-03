@@ -1,0 +1,24 @@
+.content {
+  padding: var(--q-spacing-xl);
+}
+
+.title {
+  font-size: var(--q-font-size-base);
+  font-weight: 500;
+  margin-bottom: var(--q-spacing-lg);
+}
+
+.placeholder {
+  height: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--q-radius-sm);
+  border: 1px dashed var(--border);
+  background-color: color-mix(in srgb, var(--muted) 40%, transparent);
+}
+
+.placeholderText {
+  font-size: var(--q-font-size-base);
+  color: var(--muted-foreground);
+}

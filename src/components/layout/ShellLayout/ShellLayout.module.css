@@ -1,0 +1,11 @@
+.shell {
+  min-height: 100dvh;
+  background-color: var(--background);
+}
+
+.main {
+  min-height: calc(100dvh - var(--q-header-height));
+  padding-top: var(--q-spacing-lg);
+  padding-inline: var(--q-spacing-lg);
+  padding-bottom: var(--q-spacing-page);
+}

@@ -1,3 +1,3 @@
 export default function PredictionsPage() {
-  return <main>Predictions</main>;
+  return <div>Predictions</div>;
 }

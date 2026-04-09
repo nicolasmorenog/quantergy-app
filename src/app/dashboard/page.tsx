@@ -1,4 +1,3 @@
-import { ChartCard } from "@/components/common/ChartCard/ChartCard";
 import { StatsCard } from "@/components/common/StatsCard/StatsCard";
 import styles from "./page.module.css";
 
@@ -39,8 +38,6 @@ export default function DashboardPage() {
           deltaPositive
         />
       </div>
-
-      <ChartCard title="Prediction vs Real — Last 7 days" />
     </div>
   );
 }

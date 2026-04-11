@@ -1,27 +1,9 @@
-"use client";
-
 import Image from "next/image";
-import { PanelLeft, PanelLeftClose } from "lucide-react";
 import styles from "./Header.module.css";
 
-interface HeaderProps {
-  isSidebarOpen?: boolean;
-  onToggleSidebar?: () => void;
-}
-
-export function Header({ isSidebarOpen = false, onToggleSidebar }: HeaderProps) {
+export function Header() {
   return (
     <header className={styles.header}>
-      <button
-        className={styles.sidebarButton}
-        type="button"
-        aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
-        aria-disabled={!onToggleSidebar}
-        disabled={!onToggleSidebar}
-        onClick={onToggleSidebar}
-      >
-        {isSidebarOpen ? <PanelLeftClose className={styles.sidebarButtonIcon} /> : <PanelLeft className={styles.sidebarButtonIcon} />}
-      </button>
       <div className={styles.brand}>
         <div className={styles.logoMark}>
           <Image

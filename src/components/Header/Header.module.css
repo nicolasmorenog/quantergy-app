@@ -21,7 +21,6 @@
   align-items: center;
   gap: var(--q-spacing-sm);
   min-width: 0;
-  margin-left: var(--q-spacing-xs);
 }
 
 .logoMark {
@@ -44,36 +43,4 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--foreground);
-}
-
-.sidebarButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--foreground);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--q-spacing-sm);
-  margin-left: calc(var(--q-spacing-sm) * -1);
-  border-radius: var(--q-radius-md);
-  flex-shrink: 0;
-}
-
-.sidebarButton:hover {
-  background-color: var(--accent);
-}
-
-.sidebarButton:disabled {
-  opacity: 1;
-  cursor: default;
-}
-
-.sidebarButton:disabled:hover {
-  background-color: transparent;
-}
-
-.sidebarButtonIcon {
-  width: 1.25rem;
-  height: 1.25rem;
 }

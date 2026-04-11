@@ -1,11 +1,23 @@
 .shell {
+  --q-footer-nav-height: 4.75rem;
+
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   background-color: var(--background);
 }
 
 .main {
+  flex: 1;
   min-height: calc(100dvh - var(--q-header-height));
   padding-top: var(--q-spacing-lg);
   padding-inline: var(--q-spacing-lg);
-  padding-bottom: var(--q-spacing-page);
+  padding-bottom: calc(var(--q-spacing-page) + var(--q-footer-nav-height));
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .main {
+    padding-inline: var(--q-spacing-page);
+  }
 }

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import styles from "./PredictionsView.module.css";
+import styles from "./PredictionsChart.module.css";
 
 const TIME_RANGE_PRESETS = {
   "7d": "Last 7 days",
@@ -19,7 +19,7 @@ const TIME_RANGE_PRESETS = {
   "all": "All time",
 } as const;
 
-export function PredictionsView() {
+export function PredictionsChart() {
   const [selectedRange, setSelectedRange] =
     useState<keyof typeof TIME_RANGE_PRESETS>("7d");
 

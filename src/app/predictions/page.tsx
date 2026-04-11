@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 
-import { PredictionsView } from "./PredictionsView";
+import { PredictionsChart } from "./PredictionsChart";
+import { PredictionTable } from "./PredictionsTable";
 
 export default function PredictionsPage() {
   return (
@@ -12,7 +13,8 @@ export default function PredictionsPage() {
         </p>
       </div>
 
-      <PredictionsView />
+      <PredictionsChart />
+      <PredictionTable />
     </div>
   );
 }

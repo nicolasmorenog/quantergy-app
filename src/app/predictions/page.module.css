@@ -15,3 +15,36 @@
   font-size: var(--q-font-size-sm);
   color: var(--muted-foreground);
 }
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.detailsGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detailItem:last-child {
+  border-bottom: 0;
+}
+
+.detailItem span {
+  font-size: var(--q-font-size-sm);
+  color: var(--muted-foreground);
+}
+
+.detailItem strong {
+  font-size: var(--q-font-size-sm);
+  font-weight: 600;
+  text-align: right;
+}

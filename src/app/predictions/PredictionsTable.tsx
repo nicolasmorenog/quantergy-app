@@ -1,5 +1,6 @@
 "use client";
 
+import initialMocks from "@/app/mocks/mocks.json";
 import { useState } from "react";
 import {
   Table,
@@ -13,7 +14,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -29,48 +29,34 @@ type PredictionRow = {
   difference: string;
 };
 
-const predictionRows: PredictionRow[] = [
-  {
-    id: 1,
-    date: "10-04-26",
-    prediction: "139.1 MWh",
-    error: "1.41%",
-    realValue: "137.2 MWh",
-    difference: "+1.9 MWh",
+const formatSignedValue = (value: number, unit: string) =>
+  `${value >= 0 ? "+" : ""}${value.toFixed(1)} ${unit}`;
+
+const predictionRows: PredictionRow[] = initialMocks.predictions.map(
+  (prediction) => {
+    const realValue =
+      prediction.value_real === null
+        ? "-"
+        : `${prediction.value_real} ${initialMocks.unit}`;
+    const difference =
+      prediction.value_real === null
+        ? "-"
+        : formatSignedValue(
+            prediction.value_predicted - prediction.value_real,
+            initialMocks.unit,
+          );
+
+    return {
+      id: prediction.id,
+      date: prediction.date,
+      prediction: `${prediction.value_predicted} ${initialMocks.unit}`,
+      error:
+        prediction.error_percent === null ? "-" : `${prediction.error_percent}%`,
+      realValue,
+      difference,
+    };
   },
-  {
-    id: 2,
-    date: "09-04-26",
-    prediction: "142.3 MWh",
-    error: "0.89%",
-    realValue: "141.0 MWh",
-    difference: "+1.3 MWh",
-  },
-  {
-    id: 3,
-    date: "08-04-26",
-    prediction: "145.8 MWh",
-    error: "2.58%",
-    realValue: "142.1 MWh",
-    difference: "+3.7 MWh",
-  },
-  {
-    id: 4,
-    date: "07-04-26",
-    prediction: "137.6 MWh",
-    error: "1.69%",
-    realValue: "135.3 MWh",
-    difference: "+2.3 MWh",
-  },
-  {
-    id: 5,
-    date: "06-04-26",
-    prediction: "141.2 MWh",
-    error: "0.94%",
-    realValue: "139.9 MWh",
-    difference: "+1.3 MWh",
-  },
-];
+);
 
 export function PredictionTable() {
   const [selectedRow, setSelectedRow] = useState<PredictionRow | null>(null);
@@ -117,42 +103,47 @@ export function PredictionTable() {
         </CardContent>
       </Card>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className={styles.dialogContent}>
+      <Dialog
+        open={open}
+        onOpenChange={(isOpen) => {
+          setOpen(isOpen);
+          if (!isOpen) {
+            setSelectedRow(null);
+          }
+        }}
+      >
+        <DialogContent>
           {selectedRow && (
             <>
               <DialogHeader>
                 <DialogTitle>
-                  <strong>Prediction details</strong>
+                  Prediction details for {selectedRow.date}
                 </DialogTitle>
-                <DialogDescription>
-                  Detailed forecast information for {selectedRow.date}.
-                </DialogDescription>
               </DialogHeader>
 
-              <div className={styles.dialogBody}>
+              <div className={styles.detailsGrid}>
                 <div className={styles.detailItem}>
-                  <span>Date: </span>
+                  <span>Date</span>
                   <strong>{selectedRow.date}</strong>
                 </div>
 
                 <div className={styles.detailItem}>
-                  <span>Prediction: </span>
+                  <span>Prediction</span>
                   <strong>{selectedRow.prediction}</strong>
                 </div>
 
                 <div className={styles.detailItem}>
-                  <span>Real value: </span>
+                  <span>Real value</span>
                   <strong>{selectedRow.realValue}</strong>
                 </div>
 
                 <div className={styles.detailItem}>
-                  <span>Difference: </span>
+                  <span>Difference</span>
                   <strong>{selectedRow.difference}</strong>
                 </div>
 
                 <div className={styles.detailItem}>
-                  <span>Error: </span>
+                  <span>Error</span>
                   <strong>{selectedRow.error}</strong>
                 </div>
               </div>

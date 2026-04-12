@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import styles from "./UploadFileInput.module.css";
+import { toast } from "sonner";
 
 type PredictionUploadRow = {
   id: number;
@@ -43,8 +44,11 @@ export function UploadFileInput({ onUpload }: UploadFileInputProps) {
       const parsed = JSON.parse(content) as PredictionsUpload;
 
       onUpload?.(parsed.predictions);
+      setError("");
+      toast.success("JSON file was uploaded");
     } catch {
       setError("Could not read the selected JSON file.");
+      toast.error("Could not read the selected JSON file.");
     }
   };
 

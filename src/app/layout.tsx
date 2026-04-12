@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ShellLayout } from "@/components/layout/ShellLayout/ShellLayout";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Quantergy",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <ShellLayout>{children}</ShellLayout>
+        <Toaster />
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+import { UploadView } from "./UploadView";
+
 export default function UploadPage() {
-  return <div>Upload</div>;
+  return <UploadView />;
 }

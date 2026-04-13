@@ -69,7 +69,9 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
+  --q-color-brand:            #22c55e;
+  --q-color-brand-mint:       rgb(247 255 251 / 90%);  /* White mint - Top Bar background */
+  --chart-1: var(--q-color-brand);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
   --chart-4: oklch(0.488 0.243 264.376);
@@ -87,10 +89,6 @@
   /* ============================================================
      DESIGN TOKENS
      ============================================================ */
-
-  /* --- Brand colors --- */
-  --q-color-brand:            #22c55e;
-  --q-color-brand-mint:       rgb(247 255 251 / 90%);  /* White mint - Top Bar background */
 
   /* --- Semantic colors --- */
   --q-color-positive:         #22c55e;

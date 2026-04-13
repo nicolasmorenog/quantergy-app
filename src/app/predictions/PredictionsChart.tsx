@@ -103,7 +103,7 @@ export function PredictionsChart({ data }: PredictionsChartProps) {
               type="monotone"
               dataKey="value_predicted"
               name="Predicted"
-              stroke="var(--color-chart-2)"
+              stroke="var(--chart-2)"
               strokeWidth={1.5}
               dot={{ r: 2 }}
               activeDot={{ r: 4 }}
@@ -113,7 +113,7 @@ export function PredictionsChart({ data }: PredictionsChartProps) {
               type="monotone"
               dataKey="value_real"
               name="Real"
-              stroke="var(--color-chart-1)"
+              stroke="var(--chart-1)"
               strokeWidth={1.5}
               dot={{ r: 2 }}
               activeDot={{ r: 4 }}

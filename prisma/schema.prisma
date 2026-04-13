@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id           Int          @id @default(autoincrement())
+  externalId   String       @unique
+  displayName  String?
+  unit         String       @default("MWh")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  predictions  Prediction[]
+
+  @@map("clients")
+}
+
+model Prediction {
+  id             Int       @id @default(autoincrement())
+  clientId       Int
+  predictionDate DateTime  @db.Date
+  predictedValue Decimal   @db.Decimal(10, 2)
+  realValue      Decimal?  @db.Decimal(10, 2)
+  source         String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  client         Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@unique([predictionDate])
+  @@index([predictionDate])
+  @@map("predictions")
+}

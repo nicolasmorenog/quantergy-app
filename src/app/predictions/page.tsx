@@ -1,3 +1,4 @@
+import initialMocks from "@/app/mocks/mocks.json";
 import styles from "./page.module.css";
 
 import { PredictionsChart } from "./PredictionsChart";
@@ -13,7 +14,7 @@ export default function PredictionsPage() {
         </p>
       </div>
 
-      <PredictionsChart />
+      <PredictionsChart data={initialMocks.predictions} />
       <PredictionTable />
     </div>
   );

@@ -72,42 +72,6 @@ const TIME_RANGE_PRESETS = {
   all: "All time",
 } as const;
 
-type ChartDotProps = {
-  cx?: number;
-  cy?: number;
-  stroke?: string;
-};
-
-function ChartDot({ cx, cy, stroke }: ChartDotProps) {
-  if (typeof cx !== "number" || typeof cy !== "number") return null;
-
-  return (
-    <circle
-      cx={cx}
-      cy={cy}
-      r="var(--q-chart-dot-radius)"
-      fill="var(--card)"
-      stroke={stroke ?? "var(--chart-1)"}
-      strokeWidth="var(--q-chart-line-stroke-width)"
-    />
-  );
-}
-
-function ActiveChartDot({ cx, cy, stroke }: ChartDotProps) {
-  if (typeof cx !== "number" || typeof cy !== "number") return null;
-
-  return (
-    <circle
-      cx={cx}
-      cy={cy}
-      r="var(--q-chart-active-dot-radius)"
-      fill="var(--card)"
-      stroke={stroke ?? "var(--chart-1)"}
-      strokeWidth="var(--q-chart-line-stroke-width)"
-    />
-  );
-}
-
 const parseHistoryDate = (date: string) => {
   const [year, month, day] = date.split("-").map(Number);
 
@@ -217,9 +181,9 @@ export default function HistoryChart() {
               dataKey="price"
               name="Market price"
               stroke="var(--chart-1)"
-              strokeWidth="var(--q-chart-line-stroke-width)"
-              dot={ChartDot}
-              activeDot={ActiveChartDot}
+              strokeWidth={1.5}
+              dot={{ r: 2 }}
+              activeDot={{ r: 4 }}
               unit=" €/MWh"
             />
           </LineChart>

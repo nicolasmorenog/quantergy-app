@@ -1,0 +1,21 @@
+{
+  "clientExternalId": "client-quantergy-demo",
+  "unit": "MWh",
+  "predictions": [
+    {
+      "predictionDate": "2026-04-14",
+      "predictedValue": 143.4,
+      "realValue": 141.8
+    },
+    {
+      "predictionDate": "2026-04-15",
+      "predictedValue": 146.7,
+      "realValue": 145.2
+    },
+    {
+      "predictionDate": "2026-04-16",
+      "predictedValue": 140.9,
+      "realValue": null
+    }
+  ]
+}

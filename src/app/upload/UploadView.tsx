@@ -1,13 +1,15 @@
 "use client";
 
-import initialMocks from "@/app/mocks/mocks.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -19,58 +21,108 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  deleteAllPredictions,
+  fetchPredictions,
+  type PredictionDto,
+  type PredictionsUploadPayload,
+  uploadPredictions,
+} from "@/lib/predictions";
 
 import { UploadFileInput } from "./UploadFileInput";
 import styles from "./UploadView.module.css";
 
-type PredictionUploadRow = {
-  id: number;
-  date: string;
-  value_predicted: number;
-  value_real: number | null;
-  error_percent: number | null;
-};
-
-const sortPredictionsByDate = (predictions: PredictionUploadRow[]) =>
-  [...predictions].sort((a, b) => a.date.localeCompare(b.date));
+const sortPredictionsByDate = (predictions: PredictionDto[]) =>
+  [...predictions].sort((a, b) =>
+    b.predictionDate.localeCompare(a.predictionDate),
+  );
 
 export function UploadView() {
-  const [predictions, setPredictions] = useState<PredictionUploadRow[]>(
-    () => sortPredictionsByDate(initialMocks.predictions),
-  );
+  const [predictions, setPredictions] = useState<PredictionDto[]>([]);
   const [selectedPrediction, setSelectedPrediction] =
-    useState<PredictionUploadRow | null>(null);
+    useState<PredictionDto | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [isDeletingAll, setIsDeletingAll] = useState(false);
+  const [reloadToken, setReloadToken] = useState(0);
 
-  const handleUploadPredictions = (
-    uploadedPredictions: PredictionUploadRow[],
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadPredictions() {
+      try {
+        const data = await fetchPredictions();
+
+        if (cancelled) {
+          return;
+        }
+
+        setPredictions(sortPredictionsByDate(data.predictions));
+        setError("");
+      } catch {
+        if (!cancelled) {
+          setError("Could not load predictions.");
+        }
+      }
+    }
+
+    loadPredictions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [reloadToken]);
+
+  const handleUploadPredictions = async (
+    payload: PredictionsUploadPayload,
   ) => {
-    setPredictions((currentPredictions) => {
-      const nextId =
-        currentPredictions.reduce(
-          (maxId, prediction) => Math.max(maxId, prediction.id),
-          0,
-        ) + 1;
-
-      const predictionsToAppend = uploadedPredictions.map(
-        (prediction, index) => ({
-          ...prediction,
-          id: nextId + index,
-        }),
-      );
-
-      return sortPredictionsByDate(
-        [...currentPredictions, ...predictionsToAppend],
-      );
-    });
+    await uploadPredictions(payload);
+    setSelectedPrediction(null);
+    setReloadToken((current) => current + 1);
   };
 
-  const selectedDifference =
-    selectedPrediction?.value_real === null || !selectedPrediction
-      ? null
-      : selectedPrediction.value_predicted - selectedPrediction.value_real;
+  const handleDeleteAllPredictions = async () => {
+    try {
+      setIsDeletingAll(true);
+      await deleteAllPredictions();
+      setDeleteDialogOpen(false);
+      setSelectedPrediction(null);
+      setReloadToken((current) => current + 1);
+      setError("");
+    } catch (deleteError) {
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : "Could not delete predictions.",
+      );
+    } finally {
+      setIsDeletingAll(false);
+    }
+  };
 
   return (
     <div className={styles.view}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Danger zone</CardTitle>
+        </CardHeader>
+
+        <CardContent className={styles.dangerZone}>
+          <p className={styles.dangerText}>
+            Delete all stored predictions. Clients will be kept.
+          </p>
+
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={() => setDeleteDialogOpen(true)}
+            disabled={predictions.length === 0}
+          >
+            Delete all predictions
+          </Button>
+        </CardContent>
+      </Card>
+
       {predictions.length > 0 && (
         <Card>
           <CardHeader>
@@ -78,6 +130,12 @@ export function UploadView() {
           </CardHeader>
 
           <CardContent>
+            {error && (
+              <p className={styles.error} role="alert">
+                {error}
+              </p>
+            )}
+
             <Table>
               <TableHeader>
                 <TableRow>
@@ -96,10 +154,14 @@ export function UploadView() {
                     data-selected={selectedPrediction?.id === prediction.id}
                     onClick={() => setSelectedPrediction(prediction)}
                   >
-                    <TableCell>{prediction.date}</TableCell>
-                    <TableCell>{prediction.value_predicted}</TableCell>
-                    <TableCell>{prediction.value_real ?? "-"}</TableCell>
-                    <TableCell>{prediction.error_percent ?? "-"}</TableCell>
+                    <TableCell>{prediction.predictionDate}</TableCell>
+                    <TableCell>{prediction.predictedValue}</TableCell>
+                    <TableCell>{prediction.realValue ?? "-"}</TableCell>
+                    <TableCell>
+                      {prediction.errorPercent === null
+                        ? "-"
+                        : `${prediction.errorPercent}%`}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -121,47 +183,48 @@ export function UploadView() {
             <>
               <DialogHeader>
                 <DialogTitle>
-                  Prediction details for {selectedPrediction.date}
+                  Prediction details for {selectedPrediction.predictionDate}
                 </DialogTitle>
               </DialogHeader>
 
               <div className={styles.detailsGrid}>
                 <div className={styles.detailItem}>
                   <span>Date</span>
-                  <strong>{selectedPrediction.date}</strong>
+                  <strong>{selectedPrediction.predictionDate}</strong>
                 </div>
 
                 <div className={styles.detailItem}>
                   <span>Prediction</span>
                   <strong>
-                    {selectedPrediction.value_predicted} {initialMocks.unit}
+                    {selectedPrediction.predictedValue}{" "}
+                    {selectedPrediction.client.unit}
                   </strong>
                 </div>
 
                 <div className={styles.detailItem}>
                   <span>Real value</span>
                   <strong>
-                    {selectedPrediction.value_real === null
+                    {selectedPrediction.realValue === null
                       ? "-"
-                      : `${selectedPrediction.value_real} ${initialMocks.unit}`}
+                      : `${selectedPrediction.realValue} ${selectedPrediction.client.unit}`}
                   </strong>
                 </div>
 
                 <div className={styles.detailItem}>
                   <span>Difference</span>
                   <strong>
-                    {selectedDifference === null
+                    {selectedPrediction.difference === null
                       ? "-"
-                      : `${selectedDifference.toFixed(1)} ${initialMocks.unit}`}
+                      : `${selectedPrediction.difference > 0 ? "+" : ""}${selectedPrediction.difference} ${selectedPrediction.client.unit}`}
                   </strong>
                 </div>
 
                 <div className={styles.detailItem}>
                   <span>Error</span>
                   <strong>
-                    {selectedPrediction.error_percent === null
+                    {selectedPrediction.errorPercent === null
                       ? "-"
-                      : `${selectedPrediction.error_percent}%`}
+                      : `${selectedPrediction.errorPercent}%`}
                   </strong>
                 </div>
 
@@ -192,6 +255,37 @@ export function UploadView() {
       </Dialog>
 
       <UploadFileInput onUpload={handleUploadPredictions} />
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete all predictions?</DialogTitle>
+            <DialogDescription>
+              This will permanently remove every stored prediction. Clients will
+              not be deleted.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+              disabled={isDeletingAll}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleDeleteAllPredictions}
+              disabled={isDeletingAll}
+            >
+              Delete everything
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

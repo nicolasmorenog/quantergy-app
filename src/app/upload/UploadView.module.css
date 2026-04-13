@@ -4,6 +4,19 @@
   gap: 1.5rem;
 }
 
+.dangerZone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dangerText {
+  font-size: var(--q-font-size-sm);
+  color: var(--muted-foreground);
+}
+
 .clickableRow {
   cursor: pointer;
 }

@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quantergy
 
-## Getting Started
+## Tech Stack
 
-First, run the development server:
+- Next.js 16 with App Router.
+- React 19.
+- TypeScript 5.
+- Prisma 6 as the ORM.
+- PostgreSQL 16 for persistence.
+- Docker Compose for the local database.
+- Recharts for charts.
+- Radix UI, shadcn/ui, Tailwind CSS 4, and CSS Modules for UI and styling.
+- ESLint 9 for static analysis.
+
+## Requirements
+
+- Node.js 20 or newer.
+- npm.
+- A container runtime compatible with Docker Compose:
+  - macOS: Rancher Desktop is recommended. Use the `dockerd / Moby` engine.
+  - Windows: Docker Desktop with WSL 2 is recommended.
+
+On macOS, if Rancher Desktop is installed but the `docker` command is not available in your terminal, make sure `~/.rd/bin` is in your `PATH` or open a new terminal after starting Rancher Desktop.
+
+## Environment Variables
+
+Create your local environment file from the example:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your local values.
+
+Do not commit `.env`. It may contain local credentials or other environment-specific values. Only `.env.example` should be committed as documentation for the required variables.
+
+## Running The Project
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start PostgreSQL:
+
+```bash
+docker compose up -d postgres
+```
+
+Generate the Prisma client:
+
+```bash
+npx prisma generate
+```
+
+Apply database migrations:
+
+```bash
+npx prisma migrate deploy
+```
+
+Seed the database with initial data:
+
+```bash
+npx prisma db seed
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the app at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Useful Commands
 
-## Learn More
+Check the database container status:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker compose ps
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Stop PostgreSQL without deleting local data:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+docker compose stop postgres
+```
 
-## Deploy on Vercel
+Stop PostgreSQL and delete the local data volume:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker compose down -v
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Validate the Prisma schema:
+
+```bash
+npx prisma validate
+```
+
+Run the linter:
+
+```bash
+npm run lint
+```
+
+The project includes sample JSON files in `samples/` for testing prediction uploads from the upload screen.

@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 
-import HistoryChart from "./HistoryChart";
+import { HistoryChart } from "./HistoryChart";
+import { HistoryTable } from "./HistoryTable";
 
 export default function HistoryPage() {
   return (
@@ -12,6 +13,7 @@ export default function HistoryPage() {
         </p>
       </div>
       <HistoryChart />
+      <HistoryTable />
     </div>
   );
 }

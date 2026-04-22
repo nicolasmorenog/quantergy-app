@@ -1,4 +1,4 @@
-import initialMocks from "@/app/mocks/mocks.json";
+import initialMocks from "@/app/mocks/predictions.json";
 import styles from "./page.module.css";
 
 import { PredictionsChart } from "./PredictionsChart";

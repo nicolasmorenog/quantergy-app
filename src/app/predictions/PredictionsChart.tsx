@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { ChartCard } from "@/components/common/ChartCard/ChartCard";
+import {
+  CHART_TIME_RANGE_PRESETS,
+  filterDataByTimeRange,
+  type ChartTimeRange,
+} from "@/lib/charts/timeRanges";
 import {
   Select,
   SelectContent,
@@ -23,12 +28,7 @@ import {
 
 import styles from "./PredictionsChart.module.css";
 
-const TIME_RANGE_PRESETS = {
-  "7d": "Last 7 days",
-  "30d": "Last 30 days",
-  "6m": "Last 6 months",
-  all: "All time",
-} as const;
+const PREDICTION_TIME_RANGES: ChartTimeRange[] = ["7d", "30d", "6m", "all"];
 
 type PredictionChartPoint = {
   id: number;
@@ -43,18 +43,18 @@ type PredictionsChartProps = {
 };
 
 export function PredictionsChart({ data }: PredictionsChartProps) {
-  const [selectedRange, setSelectedRange] =
-    useState<keyof typeof TIME_RANGE_PRESETS>("7d");
-  const chartData = [...data].sort((a, b) => a.date.localeCompare(b.date));
+  const [selectedRange, setSelectedRange] = useState<ChartTimeRange>("7d");
+  const chartData = useMemo(
+    () => filterDataByTimeRange(data, selectedRange),
+    [data, selectedRange],
+  );
 
   return (
     <div className={styles.view}>
       <div className={styles.toolbar}>
         <Select
           value={selectedRange}
-          onValueChange={(value) =>
-            setSelectedRange(value as keyof typeof TIME_RANGE_PRESETS)
-          }
+          onValueChange={(value) => setSelectedRange(value as ChartTimeRange)}
         >
           <SelectTrigger
             size="sm"
@@ -69,9 +69,9 @@ export function PredictionsChart({ data }: PredictionsChartProps) {
             align="start"
             avoidCollisions={false}
           >
-            {Object.entries(TIME_RANGE_PRESETS).map(([value, label]) => (
+            {PREDICTION_TIME_RANGES.map((value) => (
               <SelectItem key={value} value={value}>
-                {label}
+                {CHART_TIME_RANGE_PRESETS[value]}
               </SelectItem>
             ))}
           </SelectContent>
@@ -80,7 +80,7 @@ export function PredictionsChart({ data }: PredictionsChartProps) {
 
       <section>
         <ChartCard
-          title={`Prediction vs Real - ${TIME_RANGE_PRESETS[selectedRange]}`}
+          title={`Prediction vs Real - ${CHART_TIME_RANGE_PRESETS[selectedRange]}`}
         >
           <LineChart
             responsive
@@ -94,7 +94,7 @@ export function PredictionsChart({ data }: PredictionsChartProps) {
             <CartesianGrid strokeDasharray="4 4" />
 
             <XAxis dataKey="date" />
-            <YAxis domain={[130, 150]} width={36} tickMargin={4}/>
+            <YAxis domain={[130, 150]} width={36} tickMargin={4} />
 
             <Tooltip />
             <Legend />

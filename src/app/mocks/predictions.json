@@ -5,35 +5,35 @@
   "predictions": [
     {
       "id": 1,
-      "date": "26-04-10",
+      "date": "2026-04-10",
       "value_predicted": 139.1,
       "value_real": 137.2,
       "error_percent": 1.41
     },
     {
       "id": 2,
-      "date": "26-04-09",
+      "date": "2026-04-09",
       "value_predicted": 142.3,
       "value_real": 141.0,
       "error_percent": 0.89
     },
     {
       "id": 3,
-      "date": "26-04-08",
+      "date": "2026-04-08",
       "value_predicted": 145.8,
       "value_real": 142.1,
       "error_percent": 2.58
     },
     {
       "id": 4,
-      "date": "26-04-07",
+      "date": "2026-04-07",
       "value_predicted": 137.6,
       "value_real": 135.3,
       "error_percent": 1.69
     },
     {
       "id": 5,
-      "date": "26-04-06",
+      "date": "2026-04-06",
       "value_predicted": 141.2,
       "value_real": 139.9,
       "error_percent": 0.94

@@ -1,6 +1,6 @@
 import type { Prisma } from "@prisma/client";
 
-import type { PredictionDto } from "@/lib/predictions";
+import type { PredictionDto } from "@/lib/predictions/predictions";
 
 type PredictionWithClient = Prisma.PredictionGetPayload<{
   include: {

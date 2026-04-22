@@ -27,7 +27,7 @@ import {
   type PredictionDto,
   type PredictionsUploadPayload,
   uploadPredictions,
-} from "@/lib/predictions";
+} from "@/lib/predictions/predictions";
 
 import { UploadFileInput } from "./UploadFileInput";
 import styles from "./UploadView.module.css";

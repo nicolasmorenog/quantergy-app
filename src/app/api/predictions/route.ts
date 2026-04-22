@@ -1,6 +1,6 @@
 import { prisma } from "@/server/db/client";
 import { serializePredictions } from "@/server/predictions/serializers";
-import type { PredictionsUploadPayload } from "@/lib/predictions";
+import type { PredictionsUploadPayload } from "@/lib/predictions/predictions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

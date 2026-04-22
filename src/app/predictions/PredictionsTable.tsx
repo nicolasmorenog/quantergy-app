@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { fetchPredictions, type PredictionDto } from "@/lib/predictions";
+import { fetchPredictions, type PredictionDto } from "@/lib/predictions/predictions";
 
 import styles from "./page.module.css";
 

@@ -6,6 +6,51 @@
       "predictionDate": "14-04-2026",
       "predictedValue": "143.4",
       "realValue": "141.8"
+    },
+    {
+      "predictionDate": "15-04-2026",
+      "predictedValue": "146.7",
+      "realValue": "145.2"
+    },
+    {
+      "predictionDate": "16-04-2026",
+      "predictedValue": "140.9",
+      "realValue": null
+    },
+    {
+      "predictionDate": "17-04-2026",
+      "predictedValue": "144.1",
+      "realValue": "143.0"
+    },
+    {
+      "predictionDate": "18-04-2026",
+      "predictedValue": "141.3",
+      "realValue": "140.5"
+    },
+    {
+      "predictionDate": "19-04-2026",
+      "predictedValue": "147.2",
+      "realValue": "146.8"
+    },
+    {
+      "predictionDate": "20-04-2026",
+      "predictedValue": "139.8",
+      "realValue": "140.1"
+    },
+    {
+      "predictionDate": "21-04-2026",
+      "predictedValue": "145.5",
+      "realValue": "144.7"
+    },
+    {
+      "predictionDate": "22-04-2026",
+      "predictedValue": "142.6",
+      "realValue": "141.4"
+    },
+    {
+      "predictionDate": "23-04-2026",
+      "predictedValue": "148.0",
+      "realValue": "147.3"
     }
   ]
 }

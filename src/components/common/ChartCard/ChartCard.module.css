@@ -3,8 +3,9 @@
 }
 
 .title {
-  font-size: var(--q-font-size-base);
-  font-weight: 500;
+  font-size: var(--q-font-size-lg);
+  font-weight: 600;
+  letter-spacing: -0.025em;
   margin-bottom: var(--q-spacing-lg);
 }
 

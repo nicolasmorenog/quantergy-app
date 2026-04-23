@@ -29,6 +29,22 @@ export function PredictionsTable({ predictions }: PredictionTableProps) {
     useState<PredictionItem | null>(null);
   const [open, setOpen] = useState(false);
 
+  if (predictions.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className={styles.cardTitle}>
+            Latest energy predictions
+          </CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <p className={styles.subtitle}>No predictions available yet.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const handleRowClick = (prediction: PredictionItem) => {
     setSelectedPrediction(prediction);
     setOpen(true);
@@ -38,7 +54,7 @@ export function PredictionsTable({ predictions }: PredictionTableProps) {
     <>
       <Card>
         <CardHeader>
-          <CardTitle className={styles.title}>
+          <CardTitle className={styles.cardTitle}>
             Latest energy predictions
           </CardTitle>
         </CardHeader>

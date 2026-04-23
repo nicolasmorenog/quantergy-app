@@ -10,6 +10,12 @@
   letter-spacing: -0.025em;
 }
 
+.cardTitle {
+  font-size: var(--q-font-size-lg);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
 .subtitle {
   margin-top: 0.25rem;
   font-size: var(--q-font-size-sm);

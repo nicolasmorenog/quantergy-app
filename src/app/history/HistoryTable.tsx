@@ -20,10 +20,24 @@ type HistoryRow = {
 export function HistoryTable() {
   const rows = [...historyData].sort((a, b) => b.date.localeCompare(a.date));
 
+  if (rows.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className={styles.cardTitle}>Latest market prices</CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <p className={styles.subtitle}>No market prices available.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className={styles.title}>Latest market prices</CardTitle>
+        <CardTitle className={styles.cardTitle}>Latest market prices</CardTitle>
       </CardHeader>
 
       <CardContent>

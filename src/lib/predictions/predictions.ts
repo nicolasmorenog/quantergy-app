@@ -83,3 +83,17 @@ export async function deleteAllPredictions() {
     throw new Error(errorPayload?.error ?? "Failed to delete predictions.");
   }
 }
+
+export async function deletePrediction(id: number) {
+  const response = await fetch(`/api/predictions/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    const errorPayload = (await response.json().catch(() => null)) as
+      | { error?: string }
+      | null;
+
+    throw new Error(errorPayload?.error ?? "Failed to delete prediction.");
+  }
+}

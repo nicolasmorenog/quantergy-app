@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import {
   deleteAllPredictions,
+  deletePrediction,
   fetchPredictions,
   type PredictionItem,
   type PredictionsUploadPayload,
@@ -51,11 +52,14 @@ const isRecentlyCreated = (createdAt: string) => {
 
 export function UploadView() {
   const [predictions, setPredictions] = useState<PredictionItem[]>([]);
-  const [selectedPrediction, setSelectedPrediction] =
-    useState<PredictionItem | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [predictionToDelete, setPredictionToDelete] =
+    useState<PredictionItem | null>(null);
   const [error, setError] = useState("");
   const [isDeletingAll, setIsDeletingAll] = useState(false);
+  const [deletingPredictionId, setDeletingPredictionId] = useState<
+    number | null
+  >(null);
   const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
@@ -85,11 +89,8 @@ export function UploadView() {
     };
   }, [reloadToken]);
 
-  const handleUploadPredictions = async (
-    payload: PredictionsUploadPayload,
-  ) => {
+  const handleUploadPredictions = async (payload: PredictionsUploadPayload) => {
     await uploadPredictions(payload);
-    setSelectedPrediction(null);
     setReloadToken((current) => current + 1);
   };
 
@@ -98,7 +99,6 @@ export function UploadView() {
       setIsDeletingAll(true);
       await deleteAllPredictions();
       setDeleteDialogOpen(false);
-      setSelectedPrediction(null);
       setReloadToken((current) => current + 1);
       setError("");
     } catch (deleteError) {
@@ -109,6 +109,30 @@ export function UploadView() {
       );
     } finally {
       setIsDeletingAll(false);
+    }
+  };
+
+  const handleDeletePrediction = async () => {
+    if (!predictionToDelete) {
+      return;
+    }
+
+    try {
+      setDeletingPredictionId(predictionToDelete.id);
+      await deletePrediction(predictionToDelete.id);
+      setPredictions((current) =>
+        current.filter((prediction) => prediction.id !== predictionToDelete.id),
+      );
+      setPredictionToDelete(null);
+      setError("");
+    } catch (deleteError) {
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : "Could not delete prediction.",
+      );
+    } finally {
+      setDeletingPredictionId(null);
     }
   };
 
@@ -159,8 +183,15 @@ export function UploadView() {
                     <TableHead>Date</TableHead>
                     <TableHead>Prediction</TableHead>
                     <TableHead>Real value</TableHead>
-                    <TableHead>Difference</TableHead>
-                    <TableHead>Error %</TableHead>
+                    <TableHead className={styles.desktopOnly}>
+                      Difference
+                    </TableHead>
+                    <TableHead className={styles.desktopOnly}>
+                      Error %
+                    </TableHead>
+                    <TableHead className={styles.actionsColumn}>
+                      Actions
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
 
@@ -171,23 +202,34 @@ export function UploadView() {
                     return (
                       <TableRow
                         key={prediction.id}
-                        className={styles.clickableRow}
+                        className={styles.dataRow}
                         data-recent={isRecent}
-                        data-selected={selectedPrediction?.id === prediction.id}
-                        onClick={() => setSelectedPrediction(prediction)}
                       >
                         <TableCell>{prediction.predictionDate}</TableCell>
                         <TableCell>{prediction.predictedValue}</TableCell>
                         <TableCell>{prediction.realValue ?? "-"}</TableCell>
-                        <TableCell>
+                        <TableCell className={styles.desktopOnly}>
                           {prediction.difference === null
                             ? "-"
                             : `${prediction.difference > 0 ? "+" : ""}${prediction.difference} ${prediction.client.unit}`}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={styles.desktopOnly}>
                           {prediction.errorPercent === null
                             ? "-"
                             : `${prediction.errorPercent}%`}
+                        </TableCell>
+                        <TableCell className={styles.actionsColumn}>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label={`Delete prediction for ${prediction.predictionDate}`}
+                            className={styles.deleteButton}
+                            disabled={deletingPredictionId === prediction.id}
+                            onClick={() => setPredictionToDelete(prediction)}
+                          >
+                            <Trash2 />
+                          </Button>
                         </TableCell>
                       </TableRow>
                     );
@@ -199,90 +241,6 @@ export function UploadView() {
         )}
       </div>
 
-      <Dialog
-        open={selectedPrediction !== null}
-        onOpenChange={(open) => {
-          if (!open) {
-            setSelectedPrediction(null);
-          }
-        }}
-      >
-        <DialogContent>
-          {selectedPrediction && (
-            <>
-              <DialogHeader>
-                <DialogTitle>
-                  Prediction details for {selectedPrediction.predictionDate}
-                </DialogTitle>
-              </DialogHeader>
-
-              <div className={styles.detailsGrid}>
-                <div className={styles.detailItem}>
-                  <span>Date</span>
-                  <strong>{selectedPrediction.predictionDate}</strong>
-                </div>
-
-                <div className={styles.detailItem}>
-                  <span>Prediction</span>
-                  <strong>
-                    {selectedPrediction.predictedValue}{" "}
-                    {selectedPrediction.client.unit}
-                  </strong>
-                </div>
-
-                <div className={styles.detailItem}>
-                  <span>Real value</span>
-                  <strong>
-                    {selectedPrediction.realValue === null
-                      ? "-"
-                      : `${selectedPrediction.realValue} ${selectedPrediction.client.unit}`}
-                  </strong>
-                </div>
-
-                <div className={styles.detailItem}>
-                  <span>Difference</span>
-                  <strong>
-                    {selectedPrediction.difference === null
-                      ? "-"
-                      : `${selectedPrediction.difference > 0 ? "+" : ""}${selectedPrediction.difference} ${selectedPrediction.client.unit}`}
-                  </strong>
-                </div>
-
-                <div className={styles.detailItem}>
-                  <span>Error</span>
-                  <strong>
-                    {selectedPrediction.errorPercent === null
-                      ? "-"
-                      : `${selectedPrediction.errorPercent}%`}
-                  </strong>
-                </div>
-
-                <div className={styles.detailsActions}>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label="Edit prediction"
-                    disabled
-                  >
-                    <Pencil />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="icon-sm"
-                    aria-label="Delete prediction"
-                    disabled
-                  >
-                    <Trash2 />
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
-
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -293,7 +251,7 @@ export function UploadView() {
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter>
+          <DialogFooter className="flex-row justify-end">
             <Button
               type="button"
               variant="outline"
@@ -308,7 +266,48 @@ export function UploadView() {
               onClick={handleDeleteAllPredictions}
               disabled={isDeletingAll}
             >
-              Delete everything
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={predictionToDelete !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setPredictionToDelete(null);
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {predictionToDelete
+                ? `Delete the prediction for ${predictionToDelete.predictionDate}?`
+                : ""}
+            </DialogTitle>
+            <DialogDescription>
+              This will permanently remove the selected prediction.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter className="flex-row justify-end">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setPredictionToDelete(null)}
+              disabled={deletingPredictionId !== null}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => void handleDeletePrediction()}
+              disabled={deletingPredictionId !== null}
+            >
+              Delete
             </Button>
           </DialogFooter>
         </DialogContent>

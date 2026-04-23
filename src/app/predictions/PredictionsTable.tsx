@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { PredictionItem } from "@/lib/predictions/predictions";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 import {
   Table,
   TableBody,
@@ -17,6 +18,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 import styles from "./page.module.css";
 
@@ -24,21 +33,36 @@ type PredictionTableProps = {
   predictions: PredictionItem[];
 };
 
+const DESKTOP_MEDIA_QUERY = "(min-width: 64rem)";
+const DESKTOP_ROWS_PER_PAGE = 11;
+
 export function PredictionsTable({ predictions }: PredictionTableProps) {
   const [selectedPrediction, setSelectedPrediction] =
     useState<PredictionItem | null>(null);
   const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
+
+  const totalPages = isDesktop
+    ? Math.ceil(predictions.length / DESKTOP_ROWS_PER_PAGE)
+    : 1;
+  const paginatedPredictions = isDesktop
+    ? predictions.slice(
+        (page - 1) * DESKTOP_ROWS_PER_PAGE,
+        page * DESKTOP_ROWS_PER_PAGE,
+      )
+    : predictions;
 
   if (predictions.length === 0) {
     return (
-      <Card>
+      <Card className={styles.tableCard}>
         <CardHeader>
           <CardTitle className={styles.cardTitle}>
             Latest energy predictions
           </CardTitle>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className={styles.tableContent}>
           <p className={styles.subtitle}>No predictions available yet.</p>
         </CardContent>
       </Card>
@@ -52,25 +76,31 @@ export function PredictionsTable({ predictions }: PredictionTableProps) {
 
   return (
     <>
-      <Card>
+      <Card className={styles.tableCard}>
         <CardHeader>
           <CardTitle className={styles.cardTitle}>
             Latest energy predictions
           </CardTitle>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className={styles.tableContent}>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Date</TableHead>
                 <TableHead>Prediction</TableHead>
+                <TableHead className={styles.desktopOnlyColumn}>
+                  Real value
+                </TableHead>
+                <TableHead className={styles.desktopOnlyColumn}>
+                  Difference
+                </TableHead>
                 <TableHead>Error %</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              {predictions.map((prediction) => (
+              {paginatedPredictions.map((prediction) => (
                 <TableRow
                   key={prediction.id}
                   onClick={() => handleRowClick(prediction)}
@@ -80,15 +110,63 @@ export function PredictionsTable({ predictions }: PredictionTableProps) {
                   <TableCell>
                     {prediction.predictedValue} {prediction.client.unit}
                   </TableCell>
+                  <TableCell className={styles.desktopOnlyColumn}>
+                    {prediction.realValue === null
+                      ? "-"
+                      : `${prediction.realValue} ${prediction.client.unit}`}
+                  </TableCell>
+                  <TableCell className={styles.desktopOnlyColumn}>
+                    {prediction.difference === null
+                      ? "-"
+                      : `${prediction.difference > 0 ? "+" : ""}${prediction.difference} ${prediction.client.unit}`}
+                  </TableCell>
                   <TableCell>
                     {prediction.errorPercent === null
                       ? "-"
                       : `${prediction.errorPercent}%`}
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                ))}
+              </TableBody>
+            </Table>
+          
+
+          {isDesktop && totalPages > 1 && (
+            <Pagination className={styles.pagination}>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => setPage((current) => Math.max(current - 1, 1))}
+                    disabled={page === 1}
+                  />
+                </PaginationItem>
+
+                {Array.from({ length: totalPages }, (_, index) => {
+                  const pageNumber = index + 1;
+
+                  return (
+                    <PaginationItem key={pageNumber}>
+                      <PaginationLink
+                        isActive={page === pageNumber}
+                        onClick={() => setPage(pageNumber)}
+                      >
+                        {pageNumber}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() =>
+                      setPage((current) => Math.min(current + 1, totalPages))
+                    }
+                    disabled={page === totalPages}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          )}
         </CardContent>
       </Card>
 

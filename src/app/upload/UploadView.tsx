@@ -37,6 +37,18 @@ const sortPredictionsByDate = (predictions: PredictionItem[]) =>
     b.predictionDate.localeCompare(a.predictionDate),
   );
 
+const RECENT_PREDICTION_MAX_AGE_MS = 10 * 60 * 1000;
+
+const isRecentlyCreated = (createdAt: string) => {
+  const createdAtTime = new Date(createdAt).getTime();
+
+  if (Number.isNaN(createdAtTime)) {
+    return false;
+  }
+
+  return Date.now() - createdAtTime < RECENT_PREDICTION_MAX_AGE_MS;
+};
+
 export function UploadView() {
   const [predictions, setPredictions] = useState<PredictionItem[]>([]);
   const [selectedPrediction, setSelectedPrediction] =
@@ -102,73 +114,90 @@ export function UploadView() {
 
   return (
     <div className={styles.view}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Danger zone</CardTitle>
-        </CardHeader>
+      <div className={styles.contentGrid}>
+        <div className={styles.sidebar}>
+          <UploadFileInput onUpload={handleUploadPredictions} />
 
-        <CardContent className={styles.dangerZone}>
-          <p className={styles.dangerText}>
-            Delete all stored predictions. Clients will be kept.
-          </p>
+          <Card>
+            <CardHeader>
+              <CardTitle>Danger zone</CardTitle>
+            </CardHeader>
 
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => setDeleteDialogOpen(true)}
-            disabled={predictions.length === 0}
-          >
-            Delete all predictions
-          </Button>
-        </CardContent>
-      </Card>
-
-      {predictions.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Predictions</CardTitle>
-          </CardHeader>
-
-          <CardContent>
-            {error && (
-              <p className={styles.error} role="alert">
-                {error}
+            <CardContent className={styles.dangerZone}>
+              <p className={styles.dangerText}>
+                Delete all stored predictions. Clients will be kept.
               </p>
-            )}
 
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Prediction</TableHead>
-                  <TableHead>Real value</TableHead>
-                  <TableHead>Error %</TableHead>
-                </TableRow>
-              </TableHeader>
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={() => setDeleteDialogOpen(true)}
+                disabled={predictions.length === 0}
+              >
+                Delete all predictions
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
 
-              <TableBody>
-                {predictions.map((prediction) => (
-                  <TableRow
-                    key={prediction.id}
-                    className={styles.clickableRow}
-                    data-selected={selectedPrediction?.id === prediction.id}
-                    onClick={() => setSelectedPrediction(prediction)}
-                  >
-                    <TableCell>{prediction.predictionDate}</TableCell>
-                    <TableCell>{prediction.predictedValue}</TableCell>
-                    <TableCell>{prediction.realValue ?? "-"}</TableCell>
-                    <TableCell>
-                      {prediction.errorPercent === null
-                        ? "-"
-                        : `${prediction.errorPercent}%`}
-                    </TableCell>
+        {predictions.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Predictions</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              {error && (
+                <p className={styles.error} role="alert">
+                  {error}
+                </p>
+              )}
+
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Prediction</TableHead>
+                    <TableHead>Real value</TableHead>
+                    <TableHead>Difference</TableHead>
+                    <TableHead>Error %</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      )}
+                </TableHeader>
+
+                <TableBody>
+                  {predictions.map((prediction) => {
+                    const isRecent = isRecentlyCreated(prediction.createdAt);
+
+                    return (
+                      <TableRow
+                        key={prediction.id}
+                        className={styles.clickableRow}
+                        data-recent={isRecent}
+                        data-selected={selectedPrediction?.id === prediction.id}
+                        onClick={() => setSelectedPrediction(prediction)}
+                      >
+                        <TableCell>{prediction.predictionDate}</TableCell>
+                        <TableCell>{prediction.predictedValue}</TableCell>
+                        <TableCell>{prediction.realValue ?? "-"}</TableCell>
+                        <TableCell>
+                          {prediction.difference === null
+                            ? "-"
+                            : `${prediction.difference > 0 ? "+" : ""}${prediction.difference} ${prediction.client.unit}`}
+                        </TableCell>
+                        <TableCell>
+                          {prediction.errorPercent === null
+                            ? "-"
+                            : `${prediction.errorPercent}%`}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        )}
+      </div>
 
       <Dialog
         open={selectedPrediction !== null}
@@ -253,8 +282,6 @@ export function UploadView() {
           )}
         </DialogContent>
       </Dialog>
-
-      <UploadFileInput onUpload={handleUploadPredictions} />
 
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>

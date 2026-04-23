@@ -4,6 +4,11 @@
   gap: 1.5rem;
 }
 
+.contentGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+
 .title {
   font-size: var(--q-font-size-xl);
   font-weight: 600;
@@ -24,6 +29,10 @@
 
 .clickableRow {
   cursor: pointer;
+}
+
+.desktopOnlyColumn {
+  display: none;
 }
 
 .detailsGrid {
@@ -53,4 +62,35 @@
   font-size: var(--q-font-size-sm);
   font-weight: 600;
   text-align: right;
+}
+
+@media (min-width: 64rem) {
+  .contentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .clickableRow {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .desktopOnlyColumn {
+    display: table-cell;
+  }
+
+  .tableCard {
+    height: 100%;
+  }
+
+  .tableContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pagination {
+    margin-top: auto;
+    padding-top: var(--q-spacing-lg);
+  }
 }

@@ -35,7 +35,6 @@ export function PredictionsView() {
     date: prediction.predictionDate,
     value_predicted: prediction.predictedValue,
     value_real: prediction.realValue,
-    error_percent: prediction.errorPercent,
   }));
 
   return (
@@ -46,8 +45,10 @@ export function PredictionsView() {
         </p>
       )}
 
-      <PredictionsChart data={chartData} />
-      <PredictionsTable predictions={predictions} />
+      <div className={styles.contentGrid}>
+        <PredictionsChart data={chartData} />
+        <PredictionsTable predictions={predictions} />
+      </div>
     </>
   );
 }

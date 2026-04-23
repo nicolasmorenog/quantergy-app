@@ -1,12 +1,30 @@
+.content {
+  padding: 1rem;
+}
+
+.inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
 .label {
   font-size: var(--q-font-size-sm);
   color: var(--muted-foreground);
 }
 
 .value {
-  font-size: var(--q-font-size-xl);
+  font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .delta {
@@ -42,4 +60,18 @@
   width: 1rem;
   height: 1rem;
   color: var(--muted-foreground);
+}
+
+@media (min-width: 64rem) {
+  .content {
+    padding: 1.25rem;
+  }
+
+  .textBlock {
+    gap: 0.25rem;
+  }
+
+  .value {
+    font-size: var(--q-font-size-xl);
+  }
 }

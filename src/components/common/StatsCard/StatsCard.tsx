@@ -13,9 +13,9 @@ interface StatsCardProps {
 export function StatsCard({ label, value, delta, deltaPositive }: StatsCardProps) {
   return (
     <Card>
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-1">
+      <CardContent className={styles.content}>
+        <div className={styles.inner}>
+          <div className={styles.textBlock}>
             <p className={styles.label}>{label}</p>
             <p className={styles.value}>{value}</p>
             {delta && (

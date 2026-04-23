@@ -1,6 +1,7 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--q-spacing-md);
   padding: 0 var(--q-spacing-page);
   height: var(--q-header-height);
@@ -43,4 +44,44 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--foreground);
+}
+
+.desktopNav {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .brand {
+    justify-self: start;
+  }
+
+  .desktopNav {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    gap: var(--q-spacing-lg);
+  }
+
+  .desktopNavLink {
+    display: inline-block;
+    color: var(--muted-foreground);
+    font-size: var(--q-font-size-sm);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 160ms ease, font-weight 160ms ease;
+  }
+
+  .desktopNavLink:hover {
+    color: var(--foreground);
+  }
+
+  .desktopNavLink[data-active="true"] {
+    color: var(--foreground);
+    font-weight: 700;
+  }
 }

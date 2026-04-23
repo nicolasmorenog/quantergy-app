@@ -138,3 +138,9 @@
     @apply font-sans;
   }
 }
+
+@media (min-width: 64rem) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

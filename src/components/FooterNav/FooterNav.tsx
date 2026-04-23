@@ -2,32 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { History, LayoutDashboard, LineChart, Upload } from "lucide-react";
 
+import { NAV_ITEMS } from "@/components/navigation/navItems";
 import styles from "./FooterNav.module.css";
-
-const NAV_ITEMS = [
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    href: "/predictions",
-    label: "Predictions",
-    icon: LineChart,
-  },
-  {
-    href: "/history",
-    label: "History",
-    icon: History,
-  },
-  {
-    href: "/upload",
-    label: "Upload",
-    icon: Upload,
-  },
-] as const;
 
 export function FooterNav() {
   const pathname = usePathname();

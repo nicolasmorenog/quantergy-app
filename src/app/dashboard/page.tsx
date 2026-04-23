@@ -1,29 +1,35 @@
-import dashboardStats from "@/app/mocks/dashboard.json";
-import { StatsCard } from "@/components/common/StatsCard/StatsCard";
+import { HistorySection } from "@/app/history/HistorySection";
+import { PredictionsSection } from "@/app/predictions/PredictionsSection";
+
+import { DashboardSection } from "./DashboardSection";
 import styles from "./page.module.css";
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className={styles.title}>Dashboard</h1>
-        <p className={styles.subtitle}>
-          Today&apos;s overview — {new Date().toLocaleDateString("en-GB", { dateStyle: "long" })}
-        </p>
+    <>
+      <div className={styles.mobileOnly}>
+        <DashboardSection />
       </div>
 
-      <div className={styles.statsGrid}>
-        {dashboardStats.map((stat) => (
-          <StatsCard
-            key={stat.label}
-            label={stat.label}
-            value={stat.value}
-            delta={stat.delta}
-            deltaPositive={stat.deltaPositive}
-          />
-        ))}
+      <div className={styles.desktopOnly}>
+        <div className={styles.combinedPage}>
+          <section id="dashboard" data-nav-section className={styles.section}>
+            <DashboardSection />
+          </section>
+
+          <section
+            id="predictions"
+            data-nav-section
+            className={styles.section}
+          >
+            <PredictionsSection />
+          </section>
+
+          <section id="history" data-nav-section className={styles.section}>
+            <HistorySection />
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

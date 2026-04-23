@@ -19,5 +19,6 @@
 @media (min-width: 64rem) {
   .main {
     padding-inline: var(--q-spacing-page);
+    padding-bottom: var(--q-spacing-page);
   }
 }

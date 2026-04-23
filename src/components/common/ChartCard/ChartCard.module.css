@@ -7,6 +7,7 @@
   font-weight: 600;
   letter-spacing: -0.025em;
   margin-bottom: var(--q-spacing-lg);
+  padding-right: 0;
 }
 
 .placeholder {
@@ -22,4 +23,10 @@
 .placeholderText {
   font-size: var(--q-font-size-base);
   color: var(--muted-foreground);
+}
+
+@media (min-width: 64rem) {
+  .title {
+    padding-right: 13rem;
+  }
 }

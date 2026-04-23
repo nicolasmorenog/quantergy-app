@@ -18,21 +18,25 @@ export function parseApiDate(date: string) {
   return new Date(year, month - 1, day);
 }
 
-export function getRangeStart(range: ChartTimeRange, latestDate: Date) {
-  const rangeStart = new Date(latestDate);
+function startOfDay(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+export function getRangeStart(range: ChartTimeRange, referenceDate: Date) {
+  const rangeStart = new Date(referenceDate);
 
   switch (range) {
     case "7d":
-      rangeStart.setDate(latestDate.getDate() - 6);
+      rangeStart.setDate(referenceDate.getDate() - 6);
       return rangeStart;
     case "30d":
-      rangeStart.setDate(latestDate.getDate() - 29);
+      rangeStart.setDate(referenceDate.getDate() - 29);
       return rangeStart;
     case "6m":
-      rangeStart.setMonth(latestDate.getMonth() - 6);
+      rangeStart.setMonth(referenceDate.getMonth() - 6);
       return rangeStart;
     case "1y":
-      rangeStart.setFullYear(latestDate.getFullYear() - 1);
+      rangeStart.setFullYear(referenceDate.getFullYear() - 1);
       return rangeStart;
     case "all":
       return null;
@@ -51,12 +55,16 @@ export function filterDataByTimeRange<T extends DatedEntry>(
     return sortedData;
   }
 
-  const latestDate = parseApiDate(sortedData[sortedData.length - 1].date);
-  const rangeStart = getRangeStart(range, latestDate);
-
-  if (!rangeStart) {
+  if (range === "all") {
     return sortedData;
   }
 
-  return sortedData.filter((entry) => parseApiDate(entry.date) >= rangeStart);
+  const today = startOfDay(new Date());
+  const rangeStart = getRangeStart(range, today);
+
+  return sortedData.filter((entry) => {
+    const entryDate = parseApiDate(entry.date);
+
+    return entryDate >= rangeStart && entryDate <= today;
+  });
 }

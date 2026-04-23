@@ -106,35 +106,43 @@ export function HistoryChart() {
         title={`Market price history - ${CHART_TIME_RANGE_PRESETS[selectedRange]}`}
       >
         <div className={styles.chartFrame}>
-          <LineChart
-            responsive
-            data={chartData}
-            style={{
-              width: "100%",
-              maxWidth: "100%",
-              aspectRatio: 1.8,
-            }}
-            margin={{ top: 20, right: 0, left: 0, bottom: 10 }}
-          >
-            <CartesianGrid strokeDasharray="4 4" />
+          {chartData.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p className={styles.emptyStateText}>
+                No data available for this time range.
+              </p>
+            </div>
+          ) : (
+            <LineChart
+              responsive
+              data={chartData}
+              style={{
+                width: "100%",
+                maxWidth: "100%",
+                aspectRatio: 1.8,
+              }}
+              margin={{ top: 20, right: 0, left: 0, bottom: 10 }}
+            >
+              <CartesianGrid strokeDasharray="4 4" />
 
-            <XAxis dataKey="date" />
-            <YAxis domain={[80, 100]} width={42} tickMargin={4} />
+              <XAxis dataKey="date" />
+              <YAxis domain={[80, 100]} width={42} tickMargin={4} />
 
-            <Tooltip />
-            <Legend />
+              <Tooltip />
+              <Legend />
 
-            <Line
-              type="monotone"
-              dataKey="price"
-              name="Market price"
-              stroke="var(--chart-1)"
-              strokeWidth="var(--q-chart-line-stroke-width)"
-              dot={ChartDot}
-              activeDot={ActiveChartDot}
-              unit=" €/MWh"
-            />
-          </LineChart>
+              <Line
+                type="monotone"
+                dataKey="price"
+                name="Market price"
+                stroke="var(--chart-1)"
+                strokeWidth="var(--q-chart-line-stroke-width)"
+                dot={ChartDot}
+                activeDot={ActiveChartDot}
+                unit=" €/MWh"
+              />
+            </LineChart>
+          )}
         </div>
       </ChartCard>
     </div>

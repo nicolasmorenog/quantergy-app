@@ -35,7 +35,6 @@ type PredictionChartPoint = {
   date: string;
   value_predicted: number;
   value_real: number | null;
-  error_percent: number | null;
 };
 
 type PredictionsChartProps = {
@@ -82,43 +81,53 @@ export function PredictionsChart({ data }: PredictionsChartProps) {
         <ChartCard
           title={`Prediction vs Real - ${CHART_TIME_RANGE_PRESETS[selectedRange]}`}
         >
-          <LineChart
-            responsive
-            data={chartData}
-            style={{
-              width: "100%",
-              aspectRatio: 1.8,
-            }}
-            margin={{ top: 20, right: 12, left: 0, bottom: 10 }}
-          >
-            <CartesianGrid strokeDasharray="4 4" />
+          <div className={styles.chartFrame}>
+            {chartData.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p className={styles.emptyStateText}>
+                  No data available for this time range.
+                </p>
+              </div>
+            ) : (
+              <LineChart
+                responsive
+                data={chartData}
+                style={{
+                  width: "100%",
+                  aspectRatio: 1.8,
+                }}
+                margin={{ top: 20, right: 12, left: 0, bottom: 10 }}
+              >
+                <CartesianGrid strokeDasharray="4 4" />
 
-            <XAxis dataKey="date" />
-            <YAxis domain={[130, 150]} width={36} tickMargin={4} />
+                <XAxis dataKey="date" />
+                <YAxis domain={[130, 150]} width={36} tickMargin={4} />
 
-            <Tooltip />
-            <Legend />
+                <Tooltip />
+                <Legend />
 
-            <Line
-              type="monotone"
-              dataKey="value_predicted"
-              name="Predicted"
-              stroke="var(--chart-2)"
-              strokeWidth={1.5}
-              dot={{ r: 2 }}
-              activeDot={{ r: 4 }}
-            />
+                <Line
+                  type="monotone"
+                  dataKey="value_predicted"
+                  name="Predicted"
+                  stroke="var(--chart-2)"
+                  strokeWidth={1.5}
+                  dot={{ r: 2 }}
+                  activeDot={{ r: 4 }}
+                />
 
-            <Line
-              type="monotone"
-              dataKey="value_real"
-              name="Real"
-              stroke="var(--chart-1)"
-              strokeWidth={1.5}
-              dot={{ r: 2 }}
-              activeDot={{ r: 4 }}
-            />
-          </LineChart>
+                <Line
+                  type="monotone"
+                  dataKey="value_real"
+                  name="Real"
+                  stroke="var(--chart-1)"
+                  strokeWidth={1.5}
+                  dot={{ r: 2 }}
+                  activeDot={{ r: 4 }}
+                />
+              </LineChart>
+            )}
+          </div>
         </ChartCard>
       </section>
     </div>

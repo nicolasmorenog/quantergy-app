@@ -1,8 +1,9 @@
 export const CHART_TIME_RANGE_PRESETS = {
-  "7d": "Last 7 days",
+  "7d": "Last week",
   "30d": "Last 30 days",
   "6m": "Last 6 months",
   "1y": "Last year",
+  nextWeek: "Next week",
   all: "All time",
 } as const;
 
@@ -38,8 +39,23 @@ export function getRangeStart(range: ChartTimeRange, referenceDate: Date) {
     case "1y":
       rangeStart.setFullYear(referenceDate.getFullYear() - 1);
       return rangeStart;
+    case "nextWeek":
+      rangeStart.setDate(referenceDate.getDate() + 1);
+      return rangeStart;
     case "all":
       return null;
+  }
+}
+
+export function getRangeEnd(range: ChartTimeRange, referenceDate: Date) {
+  const rangeEnd = new Date(referenceDate);
+
+  switch (range) {
+    case "nextWeek":
+      rangeEnd.setDate(referenceDate.getDate() + 7);
+      return rangeEnd;
+    default:
+      return referenceDate;
   }
 }
 
@@ -61,10 +77,11 @@ export function filterDataByTimeRange<T extends DatedEntry>(
 
   const today = startOfDay(new Date());
   const rangeStart = getRangeStart(range, today);
+  const rangeEnd = getRangeEnd(range, today);
 
   return sortedData.filter((entry) => {
     const entryDate = parseApiDate(entry.date);
 
-    return entryDate >= rangeStart && entryDate <= today;
+    return entryDate >= rangeStart && entryDate <= rangeEnd;
   });
 }

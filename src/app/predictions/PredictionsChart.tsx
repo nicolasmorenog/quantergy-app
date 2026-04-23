@@ -28,7 +28,13 @@ import {
 
 import styles from "./PredictionsChart.module.css";
 
-const PREDICTION_TIME_RANGES: ChartTimeRange[] = ["7d", "30d", "6m", "all"];
+const PREDICTION_TIME_RANGES: ChartTimeRange[] = [
+  "nextWeek",
+  "7d",
+  "30d",
+  "6m",
+  "all",
+];
 
 type PredictionChartPoint = {
   id: number;

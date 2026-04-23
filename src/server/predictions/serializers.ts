@@ -1,6 +1,6 @@
 import type { Prisma } from "@prisma/client";
 
-import type { PredictionDto } from "@/lib/predictions/predictions";
+import type { PredictionItem } from "@/lib/predictions/predictions";
 
 type PredictionWithClient = Prisma.PredictionGetPayload<{
   include: {
@@ -14,7 +14,7 @@ function roundToTwoDecimals(value: number) {
 
 export function serializePrediction(
   prediction: PredictionWithClient,
-): PredictionDto {
+): PredictionItem {
   const predictedValue = Number(prediction.predictedValue);
   const realValue =
     prediction.realValue === null ? null : Number(prediction.realValue);

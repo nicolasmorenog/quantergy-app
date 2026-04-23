@@ -24,7 +24,7 @@ import {
 import {
   deleteAllPredictions,
   fetchPredictions,
-  type PredictionDto,
+  type PredictionItem,
   type PredictionsUploadPayload,
   uploadPredictions,
 } from "@/lib/predictions/predictions";
@@ -32,15 +32,15 @@ import {
 import { UploadFileInput } from "./UploadFileInput";
 import styles from "./UploadView.module.css";
 
-const sortPredictionsByDate = (predictions: PredictionDto[]) =>
+const sortPredictionsByDate = (predictions: PredictionItem[]) =>
   [...predictions].sort((a, b) =>
     b.predictionDate.localeCompare(a.predictionDate),
   );
 
 export function UploadView() {
-  const [predictions, setPredictions] = useState<PredictionDto[]>([]);
+  const [predictions, setPredictions] = useState<PredictionItem[]>([]);
   const [selectedPrediction, setSelectedPrediction] =
-    useState<PredictionDto | null>(null);
+    useState<PredictionItem | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [error, setError] = useState("");
   const [isDeletingAll, setIsDeletingAll] = useState(false);

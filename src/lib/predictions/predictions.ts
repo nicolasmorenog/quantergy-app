@@ -5,7 +5,7 @@ export type PredictionClient = {
   unit: string;
 };
 
-export type PredictionDto = {
+export type PredictionItem = {
   id: number;
   client: PredictionClient;
   predictionDate: string;
@@ -19,7 +19,7 @@ export type PredictionDto = {
 };
 
 export type PredictionsResponse = {
-  predictions: PredictionDto[];
+  predictions: PredictionItem[];
 };
 
 export type PredictionUploadItem = {

@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Today's Prediction",
+    "value": "142.3 MWh",
+    "delta": "+4.2% vs yesterday",
+    "deltaPositive": true
+  },
+  {
+    "label": "Real Value",
+    "value": "138.7 MWh",
+    "delta": "-2.5% vs prediction",
+    "deltaPositive": false
+  },
+  {
+    "label": "Market Price",
+    "value": "€87.40 /MWh",
+    "delta": "+1.8% vs yesterday",
+    "deltaPositive": true
+  },
+  {
+    "label": "Forecast Accuracy",
+    "value": "97.4%",
+    "delta": "+0.3% vs last week",
+    "deltaPositive": true
+  }
+]

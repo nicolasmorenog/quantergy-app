@@ -1,3 +1,4 @@
+import dashboardStats from "@/app/mocks/dashboard.json";
 import { StatsCard } from "@/components/common/StatsCard/StatsCard";
 import styles from "./page.module.css";
 
@@ -13,30 +14,15 @@ export default function DashboardPage() {
       </div>
 
       <div className={styles.statsGrid}>
-        <StatsCard
-          label="Today's Prediction"
-          value="142.3 MWh"
-          delta="+4.2% vs yesterday"
-          deltaPositive
-        />
-        <StatsCard
-          label="Real Value"
-          value="138.7 MWh"
-          delta="-2.5% vs prediction"
-          deltaPositive={false}
-        />
-        <StatsCard
-          label="Market Price"
-          value="€87.40 /MWh"
-          delta="+1.8% vs yesterday"
-          deltaPositive
-        />
-        <StatsCard
-          label="Forecast Accuracy"
-          value="97.4%"
-          delta="+0.3% vs last week"
-          deltaPositive
-        />
+        {dashboardStats.map((stat) => (
+          <StatsCard
+            key={stat.label}
+            label={stat.label}
+            value={stat.value}
+            delta={stat.delta}
+            deltaPositive={stat.deltaPositive}
+          />
+        ))}
       </div>
     </div>
   );

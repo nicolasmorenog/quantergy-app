@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import type { PredictionItem } from "@/lib/predictions/predictions";
 import {
   Table,
   TableBody,
@@ -16,45 +17,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { fetchPredictions, type PredictionDto } from "@/lib/predictions/predictions";
 
 import styles from "./page.module.css";
 
-export function PredictionTable() {
-  const [predictions, setPredictions] = useState<PredictionDto[]>([]);
+type PredictionTableProps = {
+  predictions: PredictionItem[];
+};
+
+export function PredictionsTable({ predictions }: PredictionTableProps) {
   const [selectedPrediction, setSelectedPrediction] =
-    useState<PredictionDto | null>(null);
+    useState<PredictionItem | null>(null);
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadPredictions() {
-      try {
-        const data = await fetchPredictions();
-
-        if (cancelled) {
-          return;
-        }
-
-        setPredictions(data.predictions);
-        setError("");
-      } catch {
-        if (!cancelled) {
-          setError("Could not load predictions.");
-        }
-      }
-    }
-
-    loadPredictions();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const handleRowClick = (prediction: PredictionDto) => {
+  const handleRowClick = (prediction: PredictionItem) => {
     setSelectedPrediction(prediction);
     setOpen(true);
   };
@@ -69,12 +44,6 @@ export function PredictionTable() {
         </CardHeader>
 
         <CardContent>
-          {error && (
-            <p className={styles.subtitle} role="alert">
-              {error}
-            </p>
-          )}
-
           <Table>
             <TableHeader>
               <TableRow>

@@ -1,6 +1,6 @@
-const fs = require("node:fs");
-const path = require("node:path");
-const { PrismaClient } = require("@prisma/client");
+import fs from "node:fs";
+import path from "node:path";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 

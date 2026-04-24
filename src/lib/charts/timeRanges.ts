@@ -79,6 +79,10 @@ export function filterDataByTimeRange<T extends DatedEntry>(
   const rangeStart = getRangeStart(range, today);
   const rangeEnd = getRangeEnd(range, today);
 
+  if (rangeStart === null) {
+    return sortedData;
+  }
+
   return sortedData.filter((entry) => {
     const entryDate = parseApiDate(entry.date);
 

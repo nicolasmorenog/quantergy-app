@@ -13,10 +13,13 @@ export function Header() {
   const pathname = usePathname();
   const isDesktop = useMediaQuery("(min-width: 64rem)");
   const [observedSection, setObservedSection] = useState("dashboard");
+  const routeActiveItem = NAV_ITEMS.find(
+    (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+  );
   const routeActiveSection =
-    NAV_ITEMS.find(
-      (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
-    )?.sectionId ?? "dashboard";
+    routeActiveItem && "sectionId" in routeActiveItem
+      ? routeActiveItem.sectionId
+      : "dashboard";
   const activeSection =
     isDesktop && pathname === "/dashboard" ? observedSection : routeActiveSection;
 
@@ -87,7 +90,7 @@ export function Header() {
         {NAV_ITEMS.map((item) => {
           const href = item.desktopHref;
           const isActive =
-            pathname === "/dashboard" && item.sectionId
+            pathname === "/dashboard" && "sectionId" in item
               ? activeSection === item.sectionId
               : pathname === item.href || pathname.startsWith(`${item.href}/`);
 

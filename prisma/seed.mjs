@@ -37,10 +37,12 @@ async function main() {
 
       await prisma.prediction.upsert({
         where: {
-          predictionDate,
+          clientId_predictionDate: {
+            clientId: client.id,
+            predictionDate,
+          },
         },
         update: {
-          clientId: client.id,
           predictedValue: prediction.predictedValue,
           realValue: prediction.realValue,
           source: prediction.source ?? "demo-seed",

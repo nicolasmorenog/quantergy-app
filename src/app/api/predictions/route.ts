@@ -99,14 +99,19 @@ export async function POST(request: Request) {
         `${prediction.predictionDate}T00:00:00.000Z`,
       );
 
-      await tx.prediction.deleteMany({
+      await tx.prediction.upsert({
         where: {
-          predictionDate,
+          clientId_predictionDate: {
+            clientId: client.id,
+            predictionDate,
+          },
         },
-      });
-
-      await tx.prediction.create({
-        data: {
+        update: {
+          predictedValue: prediction.predictedValue,
+          realValue: prediction.realValue,
+          source: "api-upload",
+        },
+        create: {
           clientId: client.id,
           predictionDate,
           predictedValue: prediction.predictedValue,
@@ -118,6 +123,7 @@ export async function POST(request: Request) {
 
     return tx.prediction.findMany({
       where: {
+        clientId: client.id,
         predictionDate: {
           in: payload.predictions.map(
             (prediction) =>

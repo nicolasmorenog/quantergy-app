@@ -30,7 +30,7 @@ model Prediction {
   updatedAt      DateTime  @updatedAt
   client         Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
-  @@unique([predictionDate])
+  @@unique([clientId, predictionDate])
   @@index([predictionDate])
   @@map("predictions")
 }

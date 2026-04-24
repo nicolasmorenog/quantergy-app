@@ -22,8 +22,12 @@ export function PredictionsView() {
         const data = await fetchPredictions();
         setPredictions(data.predictions);
         setError("");
-      } catch {
-        setError("Could not load predictions.");
+      } catch (loadError) {
+        setError(
+          loadError instanceof Error
+            ? loadError.message
+            : "Could not load predictions."
+        );
       }
     }
 

@@ -117,13 +117,17 @@ export function UploadView() {
         setSelectedIds([]);
         setPage(1);
         setError("");
-      } catch {
+      } catch (loadError) {
         if (!cancelled) {
-          setError("Could not load predictions.");
+          setError(
+            loadError instanceof Error
+              ? loadError.message
+              : "Could not load predictions. Please refresh the page and try again."
+          );
         }
       }
     }
-
+    
     loadPredictions();
 
     return () => {
@@ -161,7 +165,7 @@ export function UploadView() {
       setError(
         deleteError instanceof Error
           ? deleteError.message
-          : "Could not delete predictions.",
+          : "Could not delete predictions. Please refresh the page and try again.",
       );
     } finally {
       setIsDeletingAll(false);
@@ -216,7 +220,7 @@ export function UploadView() {
       setError(
         deleteError instanceof Error
           ? deleteError.message
-          : "Could not delete prediction.",
+          : "Could not delete prediction. Please refresh the page and try again.",
       );
     } finally {
       setDeletingPredictionId(null);
@@ -248,7 +252,7 @@ export function UploadView() {
       setError(
         deleteError instanceof Error
           ? deleteError.message
-          : "Could not delete selected predictions.",
+          : "Could not delete selected predictions. Please refresh the page and try again.",
       );
     } finally {
       setIsDeletingSelected(false);
@@ -277,27 +281,6 @@ export function UploadView() {
       <div className={styles.contentGrid}>
         <div className={styles.sidebar}>
           <UploadFileInput onUpload={handleUploadPredictions} />
-
-          {/* <Card>
-            <CardHeader>
-              <CardTitle>Delete all predictions</CardTitle>
-            </CardHeader>
-
-            <CardContent className={styles.dangerZone}>
-              <p className={styles.dangerText}>
-                Delete all stored predictions. Clients will be kept.
-              </p>
-
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={() => setDeleteDialogOpen(true)}
-                disabled={predictions.length === 0}
-              >
-                Delete
-              </Button>
-            </CardContent>
-          </Card> */}
         </div>
 
         {predictions.length > 0 && (

@@ -53,7 +53,7 @@ export function UploadFileInput({ onUpload }: UploadFileInputProps) {
             ),
         )
       ) {
-        throw new Error("Invalid predictions payload.");
+        throw new Error("The selected JSON must include a clientExternalId and a non-empty predictions list.");
       }
 
       if (onUpload) {
@@ -63,13 +63,15 @@ export function UploadFileInput({ onUpload }: UploadFileInputProps) {
       setError("");
       setFile(null);
       setFileName("");
-      toast.success("Predictions JSON was uploaded");
+      toast.success("Predictions JSON was uploaded!");
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Could not upload the selected JSON file.";
+      let message = "Could not upload the selected JSON file. Please check the file format and try again.";
 
+      if (error instanceof SyntaxError) {
+        message = "The selected file is not a valid JSON. Please check the file and try again.";
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
       setError(message);
       toast.error(message);
     } finally {

@@ -44,7 +44,7 @@ export async function fetchPredictions() {
       | { error?: string }
       | null;
 
-    throw new Error(errorPayload?.error ?? "Failed to load predictions.");
+    throw new Error(errorPayload?.error ?? "Failed to load predictions from the server.");
   }
 
   return (await response.json()) as PredictionsResponse;
@@ -64,7 +64,7 @@ export async function uploadPredictions(payload: PredictionsUploadPayload) {
       | { error?: string }
       | null;
 
-    throw new Error(errorPayload?.error ?? "Failed to upload predictions.");
+    throw new Error(errorPayload?.error ?? "Failed to upload predictions to the server.");
   }
 
   return (await response.json()) as PredictionsResponse;
@@ -80,7 +80,7 @@ export async function deleteAllPredictions() {
       | { error?: string }
       | null;
 
-    throw new Error(errorPayload?.error ?? "Failed to delete predictions.");
+    throw new Error(errorPayload?.error ?? "Failed to delete predictions from the server.");
   }
 }
 
@@ -94,6 +94,6 @@ export async function deletePrediction(id: number) {
       | { error?: string }
       | null;
 
-    throw new Error(errorPayload?.error ?? "Failed to delete prediction.");
+    throw new Error(errorPayload?.error ?? "Failed to delete prediction from the server.");
   }
 }

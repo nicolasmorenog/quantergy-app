@@ -1,0 +1,21 @@
+{
+  "clientExternalId": "",
+  "unit": "",
+  "predictions": [
+    {
+      "predictionDate": "2026-04-01",
+      "predictedValue": "148.0",
+      "realValue": "147.3"
+    },
+    {
+      "predictionDate": "2026-04-01",
+      "predictedValue": "143.9",
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-01",
+      "predictedValue": 146.8,
+      "realValue": null
+    }
+  ]
+}

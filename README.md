@@ -110,4 +110,4 @@ Run the linter:
 npm run lint
 ```
 
-The project includes sample JSON files in `samples/` for testing prediction uploads from the upload screen.
+The project includes sample JSON files in `samples/` for testing prediction uploads from the upload screen. There is one invalid upload sample and one valid upload sample per demo client.

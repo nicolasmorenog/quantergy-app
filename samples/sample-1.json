@@ -1,55 +1,10 @@
 {
-  "clientExternalId": "client-quantergy-demo",
+  "clientExternalId": "1",
   "unit": "MWh",
   "predictions": [
     {
-      "predictionDate": "2026-03-23",
-      "predictedValue": 143.4,
-      "realValue": 141.8
-    },
-    {
-      "predictionDate": "2026-03-24",
-      "predictedValue": 146.7,
-      "realValue": 145.2
-    },
-    {
-      "predictionDate": "2026-03-25",
-      "predictedValue": 140.9,
-      "realValue": 139.8
-    },
-    {
-      "predictionDate": "2026-03-26",
-      "predictedValue": 144.1,
-      "realValue": 143.0
-    },
-    {
-      "predictionDate": "2026-03-27",
-      "predictedValue": 141.3,
-      "realValue": 140.5
-    },
-    {
-      "predictionDate": "2026-03-28",
-      "predictedValue": 147.2,
-      "realValue": 146.8
-    },
-    {
-      "predictionDate": "2026-03-29",
-      "predictedValue": 139.8,
-      "realValue": 140.1
-    },
-    {
-      "predictionDate": "2026-03-30",
-      "predictedValue": 145.5,
-      "realValue": 144.7
-    },
-    {
-      "predictionDate": "2026-03-31",
-      "predictedValue": 142.6,
-      "realValue": 141.4
-    },
-    {
       "predictionDate": "2026-04-01",
-      "predictedValue": 148.0,
+      "predictedValue": 148,
       "realValue": 147.3
     },
     {
@@ -60,7 +15,7 @@
     {
       "predictionDate": "2026-04-03",
       "predictedValue": 146.1,
-      "realValue": 145.0
+      "realValue": 145
     },
     {
       "predictionDate": "2026-04-04",
@@ -75,7 +30,7 @@
     {
       "predictionDate": "2026-04-06",
       "predictedValue": 145.2,
-      "realValue": 144.0
+      "realValue": 144
     },
     {
       "predictionDate": "2026-04-07",
@@ -90,7 +45,7 @@
     {
       "predictionDate": "2026-04-09",
       "predictedValue": 142.2,
-      "realValue": 141.0
+      "realValue": 141
     },
     {
       "predictionDate": "2026-04-10",
@@ -100,7 +55,7 @@
     {
       "predictionDate": "2026-04-11",
       "predictedValue": 143.1,
-      "realValue": 142.0
+      "realValue": 142
     },
     {
       "predictionDate": "2026-04-12",
@@ -159,42 +114,77 @@
     },
     {
       "predictionDate": "2026-04-23",
-      "predictedValue": 145.0,
+      "predictedValue": 145,
       "realValue": 143.9
     },
     {
       "predictionDate": "2026-04-24",
       "predictedValue": 146.2,
-      "realValue": null
+      "realValue": 145.1
     },
     {
       "predictionDate": "2026-04-25",
       "predictedValue": 144.7,
-      "realValue": null
+      "realValue": 143.5
     },
     {
       "predictionDate": "2026-04-26",
       "predictedValue": 147.4,
-      "realValue": null
+      "realValue": 146.3
     },
     {
       "predictionDate": "2026-04-27",
       "predictedValue": 143.6,
-      "realValue": null
+      "realValue": 142.4
     },
     {
       "predictionDate": "2026-04-28",
       "predictedValue": 145.9,
-      "realValue": null
+      "realValue": 144.8
     },
     {
       "predictionDate": "2026-04-29",
       "predictedValue": 148.1,
-      "realValue": null
+      "realValue": 146.9
     },
     {
       "predictionDate": "2026-04-30",
       "predictedValue": 144.2,
+      "realValue": 143.1
+    },
+    {
+      "predictionDate": "2026-05-01",
+      "predictedValue": 146.8,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-02",
+      "predictedValue": 145.5,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-03",
+      "predictedValue": 147.2,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-04",
+      "predictedValue": 149,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-05",
+      "predictedValue": 146.1,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-06",
+      "predictedValue": 148.3,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-07",
+      "predictedValue": 145.7,
       "realValue": null
     }
   ]

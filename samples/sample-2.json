@@ -1,0 +1,191 @@
+{
+  "clientExternalId": "2",
+  "unit": "MWh",
+  "predictions": [
+    {
+      "predictionDate": "2026-04-01",
+      "predictedValue": 88.6,
+      "realValue": 87.9
+    },
+    {
+      "predictionDate": "2026-04-02",
+      "predictedValue": 91.2,
+      "realValue": 90.4
+    },
+    {
+      "predictionDate": "2026-04-03",
+      "predictedValue": 89.4,
+      "realValue": 88.7
+    },
+    {
+      "predictionDate": "2026-04-04",
+      "predictedValue": 92,
+      "realValue": 91.3
+    },
+    {
+      "predictionDate": "2026-04-05",
+      "predictedValue": 90.5,
+      "realValue": 89.8
+    },
+    {
+      "predictionDate": "2026-04-06",
+      "predictedValue": 87.9,
+      "realValue": 87.1
+    },
+    {
+      "predictionDate": "2026-04-07",
+      "predictedValue": 93.1,
+      "realValue": 92
+    },
+    {
+      "predictionDate": "2026-04-08",
+      "predictedValue": 89.8,
+      "realValue": 89.1
+    },
+    {
+      "predictionDate": "2026-04-09",
+      "predictedValue": 91.7,
+      "realValue": 90.8
+    },
+    {
+      "predictionDate": "2026-04-10",
+      "predictedValue": 90.2,
+      "realValue": 89.5
+    },
+    {
+      "predictionDate": "2026-04-11",
+      "predictedValue": 94,
+      "realValue": 93.1
+    },
+    {
+      "predictionDate": "2026-04-12",
+      "predictedValue": 88.9,
+      "realValue": 88
+    },
+    {
+      "predictionDate": "2026-04-13",
+      "predictedValue": 92.4,
+      "realValue": 91.6
+    },
+    {
+      "predictionDate": "2026-04-14",
+      "predictedValue": 90.8,
+      "realValue": 90
+    },
+    {
+      "predictionDate": "2026-04-15",
+      "predictedValue": 93.6,
+      "realValue": 92.8
+    },
+    {
+      "predictionDate": "2026-04-16",
+      "predictedValue": 89.1,
+      "realValue": 88.5
+    },
+    {
+      "predictionDate": "2026-04-17",
+      "predictedValue": 91.5,
+      "realValue": 90.7
+    },
+    {
+      "predictionDate": "2026-04-18",
+      "predictedValue": 90,
+      "realValue": 89.2
+    },
+    {
+      "predictionDate": "2026-04-19",
+      "predictedValue": 92.8,
+      "realValue": 91.9
+    },
+    {
+      "predictionDate": "2026-04-20",
+      "predictedValue": 88.4,
+      "realValue": 87.7
+    },
+    {
+      "predictionDate": "2026-04-21",
+      "predictedValue": 94.2,
+      "realValue": 93.4
+    },
+    {
+      "predictionDate": "2026-04-22",
+      "predictedValue": 91,
+      "realValue": 90.1
+    },
+    {
+      "predictionDate": "2026-04-23",
+      "predictedValue": 89.6,
+      "realValue": 88.9
+    },
+    {
+      "predictionDate": "2026-04-24",
+      "predictedValue": 92.1,
+      "realValue": 91.2
+    },
+    {
+      "predictionDate": "2026-04-25",
+      "predictedValue": 90.7,
+      "realValue": 89.9
+    },
+    {
+      "predictionDate": "2026-04-26",
+      "predictedValue": 93.4,
+      "realValue": 92.5
+    },
+    {
+      "predictionDate": "2026-04-27",
+      "predictedValue": 89.2,
+      "realValue": 88.3
+    },
+    {
+      "predictionDate": "2026-04-28",
+      "predictedValue": 91.9,
+      "realValue": 91.1
+    },
+    {
+      "predictionDate": "2026-04-29",
+      "predictedValue": 90.3,
+      "realValue": 89.4
+    },
+    {
+      "predictionDate": "2026-04-30",
+      "predictedValue": 92.7,
+      "realValue": 91.8
+    },
+    {
+      "predictionDate": "2026-05-01",
+      "predictedValue": 91.4,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-02",
+      "predictedValue": 93,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-03",
+      "predictedValue": 90.9,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-04",
+      "predictedValue": 94.1,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-05",
+      "predictedValue": 92.5,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-06",
+      "predictedValue": 93.7,
+      "realValue": null
+    },
+    {
+      "predictionDate": "2026-05-07",
+      "predictedValue": 91.8,
+      "realValue": null
+    }
+  ]
+}

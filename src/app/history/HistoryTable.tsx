@@ -65,23 +65,25 @@ export function HistoryTable() {
       </CardHeader>
 
       <CardContent className={styles.tableContent}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Date</TableHead>
-              <TableHead>Price</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {paginatedRows.map((row: HistoryRow) => (
-              <TableRow key={row.date}>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.price} €/MWh</TableCell>
+        <div className={styles.tableViewport}>
+          <Table>
+            <TableHeader className={styles.stickyTableHeader}>
+              <TableRow>
+                <TableHead>Date</TableHead>
+                <TableHead>Price</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+
+            <TableBody>
+              {paginatedRows.map((row: HistoryRow) => (
+                <TableRow key={row.date}>
+                  <TableCell>{row.date}</TableCell>
+                  <TableCell>{row.price} €/MWh</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
 
         {isDesktop && totalPages > 1 && (
           <Pagination className={styles.pagination}>

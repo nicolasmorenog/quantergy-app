@@ -27,6 +27,26 @@
   color: var(--muted-foreground);
 }
 
+.tableViewport {
+  max-height: 22rem;
+}
+
+.tableViewport [data-slot="table-container"] {
+  max-height: inherit;
+  overflow: auto;
+}
+
+.stickyTableHeader {
+  background: var(--card);
+}
+
+.stickyTableHeader th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--card);
+}
+
 @media (min-width: 64rem) {
   .contentGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -39,6 +59,19 @@
 
   .contentGrid > :last-child {
     order: 1;
+  }
+
+  .tableViewport {
+    max-height: none;
+  }
+
+  .tableViewport [data-slot="table-container"] {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .stickyTableHeader th {
+    position: static;
   }
 
   .tableCard {

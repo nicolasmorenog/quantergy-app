@@ -84,52 +84,53 @@ export function PredictionsTable({ predictions }: PredictionTableProps) {
         </CardHeader>
 
         <CardContent className={styles.tableContent}>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Prediction</TableHead>
-                <TableHead className={styles.desktopOnlyColumn}>
-                  Real value
-                </TableHead>
-                <TableHead className={styles.desktopOnlyColumn}>
-                  Difference
-                </TableHead>
-                <TableHead>Error %</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {paginatedPredictions.map((prediction) => (
-                <TableRow
-                  key={prediction.id}
-                  onClick={() => handleRowClick(prediction)}
-                  className={styles.clickableRow}
-                >
-                  <TableCell>{prediction.predictionDate}</TableCell>
-                  <TableCell>
-                    {prediction.predictedValue} {prediction.client.unit}
-                  </TableCell>
-                  <TableCell className={styles.desktopOnlyColumn}>
-                    {prediction.realValue === null
-                      ? "-"
-                      : `${prediction.realValue} ${prediction.client.unit}`}
-                  </TableCell>
-                  <TableCell className={styles.desktopOnlyColumn}>
-                    {prediction.difference === null
-                      ? "-"
-                      : `${prediction.difference > 0 ? "+" : ""}${prediction.difference} ${prediction.client.unit}`}
-                  </TableCell>
-                  <TableCell>
-                    {prediction.errorPercent === null
-                      ? "-"
-                      : `${prediction.errorPercent}%`}
-                  </TableCell>
+          <div className={styles.tableViewport}>
+            <Table>
+              <TableHeader className={styles.stickyTableHeader}>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Prediction</TableHead>
+                  <TableHead className={styles.desktopOnlyColumn}>
+                    Real value
+                  </TableHead>
+                  <TableHead className={styles.desktopOnlyColumn}>
+                    Difference
+                  </TableHead>
+                  <TableHead>Error %</TableHead>
                 </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {paginatedPredictions.map((prediction) => (
+                  <TableRow
+                    key={prediction.id}
+                    onClick={() => handleRowClick(prediction)}
+                    className={styles.clickableRow}
+                  >
+                    <TableCell>{prediction.predictionDate}</TableCell>
+                    <TableCell>
+                      {prediction.predictedValue} {prediction.client.unit}
+                    </TableCell>
+                    <TableCell className={styles.desktopOnlyColumn}>
+                      {prediction.realValue === null
+                        ? "-"
+                        : `${prediction.realValue} ${prediction.client.unit}`}
+                    </TableCell>
+                    <TableCell className={styles.desktopOnlyColumn}>
+                      {prediction.difference === null
+                        ? "-"
+                        : `${prediction.difference > 0 ? "+" : ""}${prediction.difference} ${prediction.client.unit}`}
+                    </TableCell>
+                    <TableCell>
+                      {prediction.errorPercent === null
+                        ? "-"
+                        : `${prediction.errorPercent}%`}
+                    </TableCell>
+                  </TableRow>
                 ))}
               </TableBody>
             </Table>
-          
+          </div>
 
           {isDesktop && totalPages > 1 && (
             <Pagination className={styles.pagination}>

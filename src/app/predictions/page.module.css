@@ -35,6 +35,26 @@
   display: none;
 }
 
+.tableViewport {
+  max-height: 22rem;
+}
+
+.tableViewport [data-slot="table-container"] {
+  max-height: inherit;
+  overflow: auto;
+}
+
+.stickyTableHeader {
+  background: var(--card);
+}
+
+.stickyTableHeader th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--card);
+}
+
 .detailsGrid {
   display: grid;
   gap: 1rem;
@@ -77,6 +97,19 @@
 
   .desktopOnlyColumn {
     display: table-cell;
+  }
+
+  .tableViewport {
+    max-height: none;
+  }
+
+  .tableViewport [data-slot="table-container"] {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .stickyTableHeader th {
+    position: static;
   }
 
   .tableCard {

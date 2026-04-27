@@ -1,0 +1,11 @@
+.page {
+  display: flex;
+  min-height: 60dvh;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 28rem;
+}

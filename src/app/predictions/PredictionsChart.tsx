@@ -23,15 +23,20 @@ type PredictionChartPoint = {
 
 type PredictionsChartProps = {
   data: PredictionChartPoint[];
+  clientControl?: React.ReactNode;
 };
 
-export function PredictionsChart({ data }: PredictionsChartProps) {
+export function PredictionsChart({
+  clientControl,
+  data,
+}: PredictionsChartProps) {
   return (
     <LineGraph
       data={data}
       ranges={PREDICTION_TIME_RANGES}
       selectLabel="Prediction time range"
       title={(range) => `Prediction vs Real - ${CHART_TIME_RANGE_PRESETS[range]}`}
+      toolbarStart={clientControl}
       yAxis={{ domain: [130, 150], width: 36, tickMargin: 4 }}
       margin={{ top: 20, right: 12, left: 0, bottom: 10 }}
       lines={[

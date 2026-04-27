@@ -17,6 +17,7 @@ import {
   filterDataByTimeRange,
   type ChartTimeRange,
 } from "@/lib/charts/timeRanges";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 import {
   Select,
   SelectContent,
@@ -31,6 +32,8 @@ type ChartEntry = {
   date: string;
 };
 
+const DESKTOP_MEDIA_QUERY = "(min-width: 64rem)";
+
 type LineGraphProps<T extends ChartEntry> = {
   data: T[];
   defaultRange?: ChartTimeRange;
@@ -39,6 +42,7 @@ type LineGraphProps<T extends ChartEntry> = {
   ranges: ChartTimeRange[];
   selectLabel: string;
   title: (range: ChartTimeRange) => string;
+  toolbarStart?: React.ReactNode;
   yAxis: React.ComponentProps<typeof YAxis>;
 };
 
@@ -50,42 +54,54 @@ export function LineGraph<T extends ChartEntry>({
   ranges,
   selectLabel,
   title,
+  toolbarStart,
   yAxis,
 }: LineGraphProps<T>) {
   const [selectedRange, setSelectedRange] =
     useState<ChartTimeRange>(defaultRange);
+  const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
   const chartData = useMemo(
     () => filterDataByTimeRange(data, selectedRange),
     [data, selectedRange],
   );
+  const topToolbarStart = isDesktop ? null : toolbarStart;
+  const bottomToolbarStart = isDesktop ? toolbarStart : null;
 
   return (
     <div className={styles.view}>
-      <div className={styles.toolbar}>
-        <Select
-          value={selectedRange}
-          onValueChange={(value) => setSelectedRange(value as ChartTimeRange)}
-        >
-          <SelectTrigger
-            size="sm"
-            aria-label={selectLabel}
-            className={styles.selectTrigger}
+      <div
+        className={styles.toolbar}
+        data-has-start={topToolbarStart ? "true" : undefined}
+      >
+        {topToolbarStart && (
+          <div className={styles.toolbarStart}>{topToolbarStart}</div>
+        )}
+        <div className={styles.toolbarEnd}>
+          <Select
+            value={selectedRange}
+            onValueChange={(value) => setSelectedRange(value as ChartTimeRange)}
           >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent
-            position="popper"
-            side="bottom"
-            align="start"
-            avoidCollisions={false}
-          >
-            {ranges.map((value) => (
-              <SelectItem key={value} value={value}>
-                {CHART_TIME_RANGE_PRESETS[value]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+            <SelectTrigger
+              size="sm"
+              aria-label={selectLabel}
+              className={styles.selectTrigger}
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent
+              position="popper"
+              side="bottom"
+              align="start"
+              avoidCollisions={false}
+            >
+              {ranges.map((value) => (
+                <SelectItem key={value} value={value}>
+                  {CHART_TIME_RANGE_PRESETS[value]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <ChartCard title={title(selectedRange)}>
@@ -121,6 +137,11 @@ export function LineGraph<T extends ChartEntry>({
             </LineChart>
           )}
         </div>
+        {bottomToolbarStart && (
+          <div className={styles.desktopToolbarStart}>
+            {bottomToolbarStart}
+          </div>
+        )}
       </ChartCard>
     </div>
   );

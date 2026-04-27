@@ -7,7 +7,30 @@
 
 .toolbar {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   justify-content: flex-end;
+}
+
+.toolbar[data-has-start="true"] {
+  justify-content: space-between;
+}
+
+.toolbarStart {
+  display: flex;
+  justify-content: flex-start;
+  margin-right: auto;
+}
+
+.toolbarEnd {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.desktopToolbarStart {
+  display: none;
 }
 
 .selectTrigger {
@@ -57,5 +80,12 @@
     top: var(--q-spacing-xl);
     right: var(--q-spacing-xl);
     z-index: 1;
+    flex-wrap: nowrap;
+  }
+
+  .desktopToolbarStart {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--q-spacing-lg);
   }
 }

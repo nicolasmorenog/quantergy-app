@@ -61,6 +61,33 @@ export async function GET() {
     return Response.json({ error: "You must sign in first." }, { status: 401 });
   }
 
+  const clientId = user.role === "CLIENT" ? user.clientId : null;
+
+  if (user.role === "CLIENT") {
+    if (clientId === null) {
+      return Response.json(
+        { error: "Your user is not linked to a client." },
+        { status: 403 },
+      );
+    }
+
+    const predictions = await prisma.prediction.findMany({
+      where: {
+        clientId,
+      },
+      include: {
+        client: true,
+      },
+      orderBy: {
+        predictionDate: "desc",
+      },
+    });
+
+    return Response.json({
+      predictions: serializePredictions(predictions),
+    });
+  }
+
   const predictions = await prisma.prediction.findMany({
     include: {
       client: true,

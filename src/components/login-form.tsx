@@ -85,9 +85,12 @@ export function LoginForm({
                 <Input id="password" name="password" type="password" required />
               </Field>
               {error && (
-                <FieldDescription className="text-destructive">
+                <div
+                  role="alert"
+                  className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+                >
                   {error}
-                </FieldDescription>
+                </div>
               )}
               <Field>
                 <Button type="submit" disabled={isSubmitting}>

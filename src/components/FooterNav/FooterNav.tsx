@@ -1,18 +1,34 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { NAV_ITEMS } from "@/components/navigation/navItems";
+import type { PublicAuthUser } from "@/lib/auth/types";
 import styles from "./FooterNav.module.css";
 
-export function FooterNav() {
+type FooterNavProps = {
+  user: PublicAuthUser | null;
+};
+
+export function FooterNav({ user }: FooterNavProps) {
   const pathname = usePathname();
+  const visibleNavItems = NAV_ITEMS.filter(
+    (item) => !("adminOnly" in item) || user?.role === "ADMIN",
+  );
 
   return (
     <footer className={styles.footer} aria-label="Main navigation">
-      <nav className={styles.nav}>
-        {NAV_ITEMS.map((item) => {
+      <nav
+        className={styles.nav}
+        style={
+          {
+            "--nav-item-count": visibleNavItems.length,
+          } as CSSProperties
+        }
+      >
+        {visibleNavItems.map((item) => {
           const Icon = item.icon;
           const isActive =
             pathname === item.href || pathname.startsWith(`${item.href}/`);

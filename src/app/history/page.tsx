@@ -1,5 +1,9 @@
+import { requireAuthPage } from "@/server/auth/guards";
+
 import { HistorySection } from "./HistorySection";
 
-export default function HistoryPage() {
+export default async function HistoryPage() {
+  await requireAuthPage();
+
   return <HistorySection />;
 }

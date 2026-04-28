@@ -1,10 +1,13 @@
 import { HistorySection } from "@/app/history/HistorySection";
 import { PredictionsSection } from "@/app/predictions/PredictionsSection";
+import { requireAuthPage } from "@/server/auth/guards";
 
 import { DashboardSection } from "./DashboardSection";
 import styles from "./page.module.css";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  await requireAuthPage();
+
   return (
     <>
       <div className={styles.mobileOnly}>

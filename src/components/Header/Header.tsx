@@ -6,14 +6,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { NAV_ITEMS } from "@/components/navigation/navItems";
+import type { PublicAuthUser } from "@/lib/auth/types";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import styles from "./Header.module.css";
 
-export function Header() {
+type HeaderProps = {
+  user: PublicAuthUser | null;
+};
+
+export function Header({ user }: HeaderProps) {
   const pathname = usePathname();
+  const isLoginRoute = pathname === "/login";
   const isDesktop = useMediaQuery("(min-width: 64rem)");
   const [observedSection, setObservedSection] = useState("dashboard");
-  const routeActiveItem = NAV_ITEMS.find(
+  const visibleNavItems = NAV_ITEMS.filter(
+    (item) => !("adminOnly" in item) || user?.role === "ADMIN",
+  );
+  const routeActiveItem = visibleNavItems.find(
     (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
   );
   const routeActiveSection =
@@ -86,27 +95,42 @@ export function Header() {
         <span className={styles.logo}>Quantergy</span>
       </div>
 
-      <nav className={styles.desktopNav} aria-label="Main navigation">
-        {NAV_ITEMS.map((item) => {
-          const href = item.desktopHref;
-          const isActive =
-            pathname === "/dashboard" && "sectionId" in item
-              ? activeSection === item.sectionId
-              : pathname === item.href || pathname.startsWith(`${item.href}/`);
+      {!isLoginRoute && (
+        <nav className={styles.desktopNav} aria-label="Main navigation">
+          {visibleNavItems.map((item) => {
+            const href = item.desktopHref;
+            const isActive =
+              pathname === "/dashboard" && "sectionId" in item
+                ? activeSection === item.sectionId
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-          return (
-            <Link
-              key={item.href}
-              href={href}
-              className={styles.desktopNavLink}
-              data-active={isActive}
-              aria-current={isActive ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+            return (
+              <Link
+                key={item.href}
+                href={href}
+                className={styles.desktopNavLink}
+                data-active={isActive}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      )}
+
+      {user && (
+        <button
+          type="button"
+          className={styles.logoutButton}
+          onClick={async () => {
+            await fetch("/api/auth/logout", { method: "POST" });
+            window.location.href = "/login";
+          }}
+        >
+          Sign out
+        </button>
+      )}
     </header>
   );
 }

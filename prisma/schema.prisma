@@ -15,8 +15,27 @@ model Client {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   predictions  Prediction[]
+  users        User[]
 
   @@map("clients")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  role         Role
+  clientId     Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  client       Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  CLIENT
 }
 
 model Prediction {

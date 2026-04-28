@@ -19,7 +19,7 @@
   width: min(100%, 34rem);
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--nav-item-count), minmax(0, 1fr));
   gap: var(--q-spacing-xs);
   margin: 0 auto;
 }

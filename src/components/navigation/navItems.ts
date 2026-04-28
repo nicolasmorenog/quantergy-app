@@ -27,5 +27,6 @@ export const NAV_ITEMS = [
     desktopHref: "/upload",
     label: "Upload",
     icon: Upload,
+    adminOnly: true,
   },
 ] as const;

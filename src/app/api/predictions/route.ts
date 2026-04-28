@@ -1,4 +1,5 @@
 import { prisma } from "@/server/db/client";
+import { getCurrentUser } from "@/server/auth/session";
 import { serializePredictions } from "@/server/predictions/serializers";
 import type { PredictionsUploadPayload } from "@/lib/predictions/predictions";
 
@@ -54,6 +55,12 @@ function validateUploadPayload(
 }
 
 export async function GET() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return Response.json({ error: "You must sign in first." }, { status: 401 });
+  }
+
   const predictions = await prisma.prediction.findMany({
     include: {
       client: true,
@@ -69,6 +76,19 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return Response.json({ error: "You must sign in first." }, { status: 401 });
+  }
+
+  if (user.role !== "ADMIN") {
+    return Response.json(
+      { error: "Only admins can upload predictions." },
+      { status: 403 },
+    );
+  }
+
   const payload = await request.json().catch(() => null);
 
   if (!validateUploadPayload(payload)) {
@@ -149,6 +169,19 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return Response.json({ error: "You must sign in first." }, { status: 401 });
+  }
+
+  if (user.role !== "ADMIN") {
+    return Response.json(
+      { error: "Only admins can delete predictions." },
+      { status: 403 },
+    );
+  }
+
   await prisma.prediction.deleteMany();
 
   return new Response(null, { status: 204 });

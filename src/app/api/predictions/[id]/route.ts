@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/server/db/client";
+import { getCurrentUser } from "@/server/auth/session";
 
 type DeletePredictionRouteContext = {
   params: Promise<{
@@ -12,6 +13,19 @@ export async function DELETE(
   _: Request,
   { params }: DeletePredictionRouteContext,
 ) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return Response.json({ error: "You must sign in first." }, { status: 401 });
+  }
+
+  if (user.role !== "ADMIN") {
+    return Response.json(
+      { error: "Only admins can delete predictions." },
+      { status: 403 },
+    );
+  }
+
   const { id } = await params;
   const predictionId = Number(id);
 

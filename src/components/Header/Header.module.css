@@ -50,6 +50,22 @@
   display: none;
 }
 
+.logoutButton {
+  justify-self: end;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: var(--q-font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.logoutButton:hover {
+  color: var(--foreground);
+}
+
 @media (min-width: 64rem) {
   .header {
     display: grid;

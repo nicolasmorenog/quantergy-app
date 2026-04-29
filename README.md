@@ -1,5 +1,18 @@
 # Quantergy
 
+Quantergy is a Next.js dashboard for viewing, managing, and uploading energy
+prediction data. It includes demo clients, role-based access, prediction charts,
+historical tables, and an admin-only upload workflow backed by PostgreSQL and
+Prisma.
+
+## Main Features
+
+- Authenticated dashboard for prediction KPIs and charts.
+- Client-scoped views for client users.
+- Prediction history and comparison views.
+- Admin access to upload, review, and delete prediction data.
+- Seeded demo data and sample upload payloads for local testing.
+
 ## Tech Stack
 
 - Next.js 16 with App Router.
@@ -9,8 +22,8 @@
 - PostgreSQL 16 for persistence.
 - Docker Compose for the local database.
 - Recharts for charts.
-- Radix UI, shadcn/ui, Tailwind CSS 4, and CSS Modules for UI and styling.
-- ESLint 9 for static analysis.
+- Radix UI, Shadcn UI, Tailwind CSS 4, and CSS Modules for UI and styling.
+- ESLint 9 and Vitest for static analysis and tests.
 
 ## Requirements
 
@@ -31,6 +44,16 @@ cp .env.example .env
 ```
 
 Then edit `.env` with your local values.
+
+Required variables:
+
+- `POSTGRES_DB`: local PostgreSQL database name.
+- `POSTGRES_USER`: local PostgreSQL username.
+- `POSTGRES_PASSWORD`: local PostgreSQL password.
+- `POSTGRES_PORT`: local PostgreSQL port exposed on the host.
+- `DATABASE_URL`: Prisma connection string.
+- `AUTH_SECRET`: secret used to sign session cookies. Use a long random value,
+  especially outside local development.
 
 Do not commit `.env`. It may contain local credentials or other environment-specific values. Only `.env.example` should be committed as documentation for the required variables.
 
@@ -65,6 +88,13 @@ Seed the database with initial data:
 ```bash
 npx prisma db seed
 ```
+
+The seed creates demo clients, predictions, and the following local users:
+
+| Role | Email | Password |
+| Admin | admin@quantergy.com | admin123 |
+| Client | client1@quantergy.com | client123 |
+| Client | client2@quantergy.com | client789 |
 
 Start the development server:
 
@@ -109,5 +139,25 @@ Run the linter:
 ```bash
 npm run lint
 ```
+
+Run tests:
+
+```bash
+npm test
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Check dependency vulnerabilities:
+
+```bash
+npm audit
+```
+
+## Sample Uploads
 
 The project includes sample JSON files in `samples/` for testing prediction uploads from the upload screen. There is one invalid upload sample and one valid upload sample per demo client.

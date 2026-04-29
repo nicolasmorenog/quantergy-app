@@ -92,9 +92,10 @@ npx prisma db seed
 The seed creates demo clients, predictions, and the following local users:
 
 | Role | Email | Password |
-| Admin | admin@quantergy.com | admin123 |
-| Client | client1@quantergy.com | client123 |
-| Client | client2@quantergy.com | client789 |
+| --- | --- | --- |
+| Admin | `admin@quantergy.com` | `admin123` |
+| Client | `client1@quantergy.com` | `client123` |
+| Client | `client2@quantergy.com` | `client789` |
 
 Start the development server:
 

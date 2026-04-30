@@ -1,3 +1,9 @@
+.sectionStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--q-spacing-2xl);
+}
+
 .title {
   font-size: var(--q-font-size-xl);
   font-weight: 600;

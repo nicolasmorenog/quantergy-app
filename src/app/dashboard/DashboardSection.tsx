@@ -10,7 +10,7 @@ const formattedToday = new Intl.DateTimeFormat("en-GB", {
 
 export function DashboardSection() {
   return (
-    <div className="space-y-6">
+    <div className={styles.sectionStack}>
       <div>
         <h1 className={styles.title}>Dashboard</h1>
         <p className={styles.subtitle}>

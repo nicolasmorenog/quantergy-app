@@ -1,6 +1,4 @@
 .shell {
-  --q-footer-nav-height: 4.75rem;
-
   min-height: 100dvh;
   display: flex;
   flex-direction: column;

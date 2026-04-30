@@ -1,26 +1,26 @@
 .view {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--q-spacing-2xl);
 }
 
 .contentGrid {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--q-spacing-2xl);
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--q-spacing-2xl);
 }
 
 .dangerZone {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--q-spacing-lg);
   flex-wrap: wrap;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .dataRow[data-recent="true"] {
-  background-color: rgb(16 185 129 / 10%);
+  background-color: var(--q-color-positive-subtle);
 }
 
 .checkboxColumn {
@@ -58,7 +58,7 @@
 }
 
 .tableViewport {
-  max-height: 22rem;
+  max-height: var(--q-table-scroll-height);
 }
 
 .tableViewport [data-slot="table-container"] {
@@ -84,6 +84,11 @@
   margin-top: var(--q-spacing-lg);
 }
 
+.dialogFooter {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
 .pagination {
   margin-top: 0;
 }
@@ -92,13 +97,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: var(--q-spacing-ui);
 }
 
 @media (min-width: 64rem) {
   .contentGrid {
     display: grid;
-    grid-template-columns: minmax(20rem, 24rem) minmax(0, 1fr);
+    grid-template-columns:
+      minmax(var(--q-sidebar-width-min), var(--q-sidebar-width-max))
+      minmax(0, 1fr);
     align-items: start;
   }
 
@@ -118,7 +125,7 @@
   .tableFooter {
     position: relative;
     display: flex;
-    min-height: 2.25rem;
+    min-height: var(--q-dialog-footer-height);
     align-items: center;
     justify-content: center;
   }

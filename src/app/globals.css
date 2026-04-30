@@ -70,7 +70,8 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --q-color-brand:            #22c55e;
-  --q-color-brand-mint:       rgb(247 255 251 / 90%);  /* White mint - Top Bar background */
+  --q-color-brand-mint:       rgb(247 255 251);
+  --q-color-surface:           rgb(255 255 255);
   --chart-1: var(--q-color-brand);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
@@ -96,35 +97,58 @@
   /* --- Semantic colors --- */
   --q-color-positive:         #22c55e;
   --q-color-negative:         var(--destructive);
+  --q-color-positive-subtle:   rgb(16 185 129 / 10%);
+  --q-color-brand-subtle:      rgb(34 197 94 / 8%);
+  --q-color-brand-muted:       rgb(34 197 94 / 14%);
+  --q-color-brand-border:      rgb(34 197 94 / 24%);
 
   /* --- Typography --- */
   --q-font-size-xs:           0.6875rem;  /* 11px */
   --q-font-size-sm:           0.8125rem;  /* 13px */
   --q-font-size-base:         0.875rem;   /* 14px */
-  --q-font-size-md:           0.9375rem;  /* 15px */
   --q-font-size-lg:           1.125rem;   /* 18px */
   --q-font-size-xl:           1.5rem;     /* 24px */
 
   /* --- Spacing --- */
   --q-spacing-xs:             0.125rem;   /* 2px */
+  --q-spacing-2xs:            0.25rem;    /* 4px */
   --q-spacing-sm:             0.625rem;   /* 10px */
+  --q-spacing-ui:             0.75rem;    /* 12px */
   --q-spacing-md:             0.875rem;   /* 14px */
   --q-spacing-lg:             1rem;       /* 16px */
   --q-spacing-xl:             1.25rem;    /* 20px */
+  --q-spacing-2xl:            1.5rem;     /* 24px */
   --q-spacing-page:           2rem;       /* 32px */
 
   /* --- Border radius --- */
   --q-radius-sm:              0.375rem;   /* 6px */
   --q-radius-md:              0.5rem;     /* 8px */
+  --q-radius-lg:              0.875rem;   /* 14px */
+
+  /* --- Layout --- */
+  --q-table-scroll-height:     22rem;
+  --q-dialog-footer-height:    2.25rem;
+  --q-sidebar-width-min:       20rem;
+  --q-sidebar-width-max:       24rem;
+  --q-footer-nav-height:       4.75rem;
 
   /* --- Header --- */
-  --q-header-bg:              var(--q-color-brand-mint);
+  --q-header-bg:              rgb(247 255 251 / 90%);
   --q-header-border:          rgb(186 227 205 / 66%);  /* Brand green, 66% opacity */
   --q-header-shadow-inner:    rgb(255 255 255 / 78%);
   --q-header-shadow-outer:    rgb(95 153 122 / 16%);   /* Brand green ambient */
   --q-header-height:          4rem;
   --q-header-logo-size:       1.5rem;
   --q-header-brand-size:      var(--q-font-size-lg);
+
+  /* --- Footer navigation --- */
+  --q-footer-bg-start:         var(--q-color-brand-mint);
+  --q-footer-bg-end:           var(--q-color-surface);
+  --q-footer-shadow-inner:     var(--q-header-shadow-inner);
+  --q-footer-shadow-outer:     rgb(95 153 122 / 14%);
+  --q-footer-nav-max-width:    34rem;
+  --q-footer-link-min-height:  3.25rem;
+  --q-footer-icon-size:        1.25rem;
 }
 
 @layer base {
@@ -133,6 +157,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   html {
     @apply font-sans;

@@ -442,7 +442,7 @@ export function UploadView() {
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="flex-row justify-end">
+          <DialogFooter className={styles.dialogFooter}>
             <Button
               type="button"
               variant="outline"
@@ -475,7 +475,7 @@ export function UploadView() {
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="flex-row justify-end">
+          <DialogFooter className={styles.dialogFooter}>
             <Button
               type="button"
               variant="outline"
@@ -516,7 +516,7 @@ export function UploadView() {
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter className="flex-row justify-end">
+          <DialogFooter className={styles.dialogFooter}>
             <Button
               type="button"
               variant="outline"

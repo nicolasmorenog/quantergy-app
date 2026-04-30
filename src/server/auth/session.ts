@@ -11,7 +11,13 @@ type SessionPayload = PublicAuthUser & {
 };
 
 function getAuthSecret() {
-  return process.env.AUTH_SECRET ?? "quantergy-demo-auth-secret";
+  const authSecret = process.env.AUTH_SECRET;
+
+  if (!authSecret) {
+    throw new Error("AUTH_SECRET is required.");
+  }
+
+  return authSecret;
 }
 
 function signPayload(payload: string) {

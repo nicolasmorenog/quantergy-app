@@ -84,15 +84,15 @@ export function Header({ user }: HeaderProps) {
       <div className={styles.brand}>
         <div className={styles.logoMark}>
           <Image
-            src="/flyquest-logo.svg"
-            alt="Quantergy logo"
+            src="/wattrgy-logo.svg"
+            alt="Wattrgy logo"
             width={24}
             height={24}
             className={styles.logoImage}
             priority
           />
         </div>
-        <span className={styles.logo}>Quantergy</span>
+        <span className={styles.logo}>Wattrgy</span>
       </div>
 
       {!isLoginRoute && (

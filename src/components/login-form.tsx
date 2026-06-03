@@ -63,9 +63,9 @@ export function LoginForm({
           <form className="p-6 md:p-8" onSubmit={handleSubmit}>
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Welcome to Quantergy</h1>
+                <h1 className="text-2xl font-bold">Welcome to Wattrgy</h1>
                 <p className="text-balance text-muted-foreground">
-                  Login to your Quantergy account
+                  Login to your Wattrgy account
                 </p>
               </div>
               <Field>
@@ -74,7 +74,7 @@ export function LoginForm({
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="admin@quantergy.com"
+                  placeholder="admin@wattrgy.com"
                   required
                 />
               </Field>
@@ -102,9 +102,9 @@ export function LoginForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        <span className="block">client1@quantergy.com / client123</span>
-        <span className="block">client2@quantergy.com / client789</span>
-        <span className="block">admin@quantergy.com / admin123</span>
+        <span className="block">client1@wattrgy.com / client123</span>
+        <span className="block">client2@wattrgy.com / client789</span>
+        <span className="block">admin@wattrgy.com / admin123</span>
       </FieldDescription>
     </div>
   )

@@ -75,7 +75,7 @@ async function main() {
 
   await prisma.user.upsert({
     where: {
-      email: "admin@quantergy.com",
+      email: "admin@wattrgy.com",
     },
     update: {
       passwordHash: hashPassword("admin123"),
@@ -83,7 +83,7 @@ async function main() {
       clientId: null,
     },
     create: {
-      email: "admin@quantergy.com",
+      email: "admin@wattrgy.com",
       passwordHash: hashPassword("admin123"),
       role: "ADMIN",
     },
@@ -92,7 +92,7 @@ async function main() {
   if (client1) {
     await prisma.user.upsert({
       where: {
-        email: "client1@quantergy.com",
+        email: "client1@wattrgy.com",
       },
       update: {
         passwordHash: hashPassword("client123"),
@@ -100,7 +100,7 @@ async function main() {
         clientId: client1.id,
       },
       create: {
-        email: "client1@quantergy.com",
+        email: "client1@wattrgy.com",
         passwordHash: hashPassword("client123"),
         role: "CLIENT",
         clientId: client1.id,
@@ -111,7 +111,7 @@ async function main() {
   if (client2) {
     await prisma.user.upsert({
       where: {
-        email: "client2@quantergy.com",
+        email: "client2@wattrgy.com",
       },
       update: {
         passwordHash: hashPassword("client789"),
@@ -119,7 +119,7 @@ async function main() {
         clientId: client2.id,
       },
       create: {
-        email: "client2@quantergy.com",
+        email: "client2@wattrgy.com",
         passwordHash: hashPassword("client789"),
         role: "CLIENT",
         clientId: client2.id,

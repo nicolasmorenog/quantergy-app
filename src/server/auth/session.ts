@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 import type { PublicAuthUser } from "@/lib/auth/types";
 
-export const SESSION_COOKIE_NAME = "quantergy_session";
+export const SESSION_COOKIE_NAME = "wattrgy_session";
 export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8;
 
 type SessionPayload = PublicAuthUser & {

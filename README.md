@@ -1,9 +1,15 @@
-# Quantergy
+# Wattrgy
 
-Quantergy is a Next.js dashboard for viewing, managing, and uploading energy
+Wattrgy is a Next.js dashboard for viewing, managing, and uploading energy
 prediction data. It includes demo clients, role-based access, prediction charts,
 historical tables, and an admin-only upload workflow backed by PostgreSQL and
 Prisma.
+
+## Project Context
+
+Wattrgy was developed as an academic portfolio project originally designed for a
+Spanish energy advisory startup. The project is not currently affiliated with,
+operated by, or commercially endorsed by any active company.
 
 ## Main Features
 
@@ -93,9 +99,9 @@ The seed creates demo clients, predictions, and the following local users:
 
 | Role | Email | Password |
 | --- | --- | --- |
-| Admin | `admin@quantergy.com` | `admin123` |
-| Client | `client1@quantergy.com` | `client123` |
-| Client | `client2@quantergy.com` | `client789` |
+| Admin | `admin@wattrgy.com` | `admin123` |
+| Client | `client1@wattrgy.com` | `client123` |
+| Client | `client2@wattrgy.com` | `client789` |
 
 Start the development server:
 

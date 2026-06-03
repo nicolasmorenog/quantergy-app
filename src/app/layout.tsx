@@ -4,8 +4,8 @@ import { ShellLayout } from "@/components/layout/ShellLayout/ShellLayout";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Quantergy",
-  description: "Quantergy dashboard",
+  title: "Wattrgy",
+  description: "Wattrgy dashboard",
 };
 
 export default function RootLayout({

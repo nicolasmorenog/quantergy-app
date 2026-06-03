@@ -1,18 +1,18 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: quantergy-postgres
+    container_name: wattrgy-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-quantergy}
-      POSTGRES_USER: ${POSTGRES_USER:-quantergy}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-quantergy}
+      POSTGRES_DB: ${POSTGRES_DB:-wattrgy}
+      POSTGRES_USER: ${POSTGRES_USER:-wattrgy}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-wattrgy}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-quantergy} -d ${POSTGRES_DB:-quantergy}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-wattrgy} -d ${POSTGRES_DB:-wattrgy}"]
       interval: 10s
       timeout: 5s
       retries: 5
